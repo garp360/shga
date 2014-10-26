@@ -1,10 +1,18 @@
 var app = angular.module("shgaApp", [ 'firebase', 'ui.bootstrap' ]);
 
+app.config(function (datepickerConfig, datepickerPopupConfig) {
+    datepickerConfig.showWeeks = false;
+    datepickerPopupConfig.toggleWeeksText = null;
+    datepickerPopupConfig.startingDay = 0;
+  });
+
+
 app.controller("EventController", function($scope, $firebase, $modal, $log, authProvider, shgaDataProvider) {
     var rootRef = new Firebase("https://shga.firebaseio.com");
     $scope.user = {};
     $scope.sec = {};
     $scope.registrant = {};
+    $scope.shgaEvent = {};
     $scope.shgaEvents = shgaDataProvider.getEventData();
     
     rootRef.onAuth(function globalOnAuth(authData) {
@@ -47,6 +55,7 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
             templateUrl : 'myModalContent.html',
             controller : 'RegistrationController',
             size : size,
+            backdrop : 'static',
             resolve : {
                 registrant : function() {
                     return $scope.registrant;
@@ -73,6 +82,38 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
             $log.info('Modal dismissed at: ' + new Date());
         });
     };
+
+    $scope.formatDate = function(timestamp) {
+    	var mDate = moment(timestamp).format("dddd, MMMM Do YYYY");
+    	$log.info("mDate = " + mDate);
+    	return mDate;
+    };
+    
+    $scope.createEvent = function(size) {
+    	var modalInstance = $modal.open({
+    		templateUrl : 'manageEventForm.html',
+    		controller : 'ManageEventController',
+    		size : size,
+    		backdrop : 'static',
+    		resolve : {
+    			shgaEvent : function() {
+    				return $scope.shgaEvent;
+    			}
+    		}
+    	});
+    	
+    	modalInstance.result.then(function(shgaEvent) {
+    		//$log.info('shgaEvent: ' + shgaEvent);
+    		shgaDataProvider.createShgaEvent(rootRef, shgaEvent).then(function() { 
+    			$log.info('Event Created Successfully');
+    			$scope.shgaEvents = shgaDataProvider.getEventData();
+    		}, function(err) {
+    			$log.info('SHGA Event Error: ' + err);
+    		});
+    	}, function() {
+    		$log.info('Modal dismissed at: ' + new Date());
+    	});
+    };
 });
 
 app.controller('RegistrationController', function($scope, $modalInstance, registrant) {
@@ -86,6 +127,56 @@ app.controller('RegistrationController', function($scope, $modalInstance, regist
     $scope.cancel = function() {
         $modalInstance.dismiss('cancel');
     };
+});
+
+app.controller('ManageEventController', function($scope, $modalInstance, shgaEvent) {
+	$scope.groups = ['Saturday Group', 'Sunday Group'];
+    $scope.group = $scope.groups[0];
+    
+    $scope.courses = ['South Hampton', 'Cimarrone', 'St. Johns'];
+    $scope.course = $scope.courses[0];
+    
+    $scope.shgaEvent = {
+    		group : $scope.groups[0],
+    		course : $scope.courses[0]
+    };
+    
+	$scope.ok = function() {
+		var data = angular.copy($scope.shgaEvent);
+		var jsonData = angular.toJson(data);
+		//console.log("eventJson = " + jsonData.toString());
+		$scope.shgaEvent = {};
+		$modalInstance.close(jsonData);
+	};
+	
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
+	};
+	
+	$scope.today = function() {
+		$scope.shgaEvent.dt = new Date();
+	  };
+	  $scope.today();
+
+	  $scope.clear = function () {
+		  $scope.shgaEvent.dt = null;
+	  };
+
+	  $scope.toggleMin = function() {
+	    $scope.minDate = $scope.minDate ? null : new Date();
+	  };
+	  
+	  $scope.toggleMin();
+
+	  $scope.open = function($event) {
+	    $event.preventDefault();
+	    $event.stopPropagation();
+
+	    $scope.opened = true;
+	  };
+
+	  $scope.formats = ['EEE, MMMM dd, yyyy', 'dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+	  $scope.format = $scope.formats[0];
 });
 
 app.filter('currentEvents', function() {
@@ -120,11 +211,50 @@ app.factory('shgaDataProvider', function($firebase, $q) {
 
         return eventsArray;
     };
+
+    shgaDataService.createShgaEvent = function createEvent(rootRef, shgaEvent) {
+    	var authData = rootRef.getAuth();
+    	//console.log("authData.uid :" + authData.uid);
+    	//console.log("createEvent shgaEvent = " + shgaEvent);
+    	
+    	if(shgaEvent && authData) {
+    		var objShgaEvent = angular.fromJson(shgaEvent);
+    		var eventDate = objShgaEvent.dt;
+    		var timestamp = _convertToTimestamp(eventDate);
+    		var eventId = authData.uid + ":" + timestamp;
+    		var event = {
+    			eventId : eventId,
+    			uid : authData.uid,
+    			timestamp : timestamp,
+    			course : objShgaEvent.course,
+    			group : objShgaEvent.group
+    		};
+    		rootRef.child('events').child(eventId).set(angular.fromJson(event));
+    	}
+    };
     
     shgaDataService.getGolferByUserId = function setLoggedInAs(userId) {
         var golferRef = new Firebase("https://shga.firebaseio.com/golfers/" + userId);
         var golfer = $firebase(golferRef).$asObject();
         return golfer;
+    };
+    
+    function _convertToTimestamp(dateString) {
+    	console.log("dateString = " + dateString);
+    	
+    	var d = new Date(Date.parse(dateString));
+    	console.log("d = " + d);
+    	
+    	var n = d.toLocaleDateString();
+    	console.log("n = " + n);
+    	
+        var t = new Date(Date.parse(n));
+        console.log("t = " + t);
+
+        var timestamp = t.getTime();
+    	console.log("timestamp = " + timestamp);
+    	
+    	return timestamp;
     };
     
     return shgaDataService;
@@ -163,7 +293,8 @@ app.factory('authProvider', function($firebase, $q) {
             			firstName : registrant.firstName,
                         lastName : registrant.lastName,
                         nickname : 'none',
-                        roles : ['SHGA_USER'],
+                        uid : authData.uid,
+                        roles : ['SHGA_USER','SHGA_ADMIN'],
                         email : registrant.username,
                         teebox : 'BLACK',
                         hcp : 10,
