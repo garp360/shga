@@ -93,6 +93,23 @@ app.controller("EventController", function($scope, $firebase, $modal, $log,
         shgaDataProvider.deleteShgaEvent(rootRef, shgaEvent);
     };
     
+    $scope.signUp = function(shgaEvent, user) {
+    	var golfers = [];
+    	if(shgaEvent.golfers) {
+    		golfers = shgaEvent.golfers;
+    	}
+    	
+    	golfers.push({
+    		uid : user.uid,
+    		firstName : user.firstName,
+    		lastName : user.lastName,
+    		hcp : user.hcp,
+    		teebox : user.teebox,
+    		email : user.email
+    	});
+        shgaDataProvider.addGolfers(rootRef, shgaEvent, golfers);
+    };
+    
     $scope.createEvent = function(size) {
         var modalInstance = $modal.open({
             templateUrl : 'partial/shga-event-form.html',
@@ -282,6 +299,27 @@ app.factory('shgaDataProvider',
                         timestamp : timestamp,
                         course : objShgaEvent.course,
                         teeTimes : objShgaEvent.teeTimes,
+                        golfers : [],
+                        group : objShgaEvent.group
+                    };
+                    rootRef.child('events').child(eventId).set(
+                            angular.fromJson(event));
+                }
+            };
+            
+            shgaDataService.addGolfers = function addGolfers(rootRef, shgaEvent, golfers) {
+            	var authData = rootRef.getAuth();
+
+                if (shgaEvent && authData) {
+                    var objShgaEvent = angular.fromJson(shgaEvent);
+                    var eventId = objShgaEvent.eventId;
+                    var event = {
+                        eventId : eventId,
+                        uid : shgaEvent.uid,
+                        timestamp : shgaEvent.timestamp,
+                        course : objShgaEvent.course,
+                        teeTimes : objShgaEvent.teeTimes,
+                        golfers : golfers,
                         group : objShgaEvent.group
                     };
                     rootRef.child('events').child(eventId).set(
