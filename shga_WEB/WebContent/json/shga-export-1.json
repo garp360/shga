@@ -1,0 +1,50 @@
+{
+  "events" : {
+    "simplelogin:57:1414900800000" : {
+      "course" : "South Hampton",
+      "eventId" : "simplelogin:57:1414900800000",
+      "golfers" : [ {
+        "email" : "garth.pidcock@gmail.com",
+        "firstName" : "Garth",
+        "hcp" : "5.9",
+        "lastName" : "Pidcock",
+        "teebox" : "BLACK",
+        "uid" : "simplelogin:57"
+      } ],
+      "group" : "Sunday Group",
+      "teeTimes" : [ "2014-10-27T11:54:58.801Z", "2014-10-27T11:36:58.801Z", "2014-10-27T11:45:58.801Z" ],
+      "timestamp" : 1414900800000,
+      "uid" : "simplelogin:57"
+    }
+  },
+  "golfers" : {
+    "simplelogin:57" : {
+      "email" : "garth.pidcock@gmail.com",
+      "firstName" : "Garth",
+      "ghin" : "0000000000",
+      "hcp" : "5.9",
+      "lastName" : "Pidcock",
+      "nickname" : "none",
+      "pw" : "tnplh",
+      "roles" : [ "SHGA_USER", "SHGA_ADMIN" ],
+      "teebox" : "BLACK",
+      "uid" : "simplelogin:57"
+    }
+  },
+  "users" : {
+    "simplelogin:57" : {
+      "auth" : {
+        "provider" : "password",
+        "uid" : "simplelogin:57"
+      },
+      "expires" : 1414364913,
+      "password" : {
+        "email" : "garth.pidcock@gmail.com",
+        "isTemporaryPassword" : false
+      },
+      "provider" : "password",
+      "token" : "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ2IjowLCJkIjp7InByb3ZpZGVyIjoicGFzc3dvcmQiLCJ1aWQiOiJzaW1wbGVsb2dpbjo1NyJ9LCJpYXQiOjE0MTQyNzg1MTN9.Vy35lFnMrqIG7jPsSD234_mKf8zonDBewFCeDf4xcFk",
+      "uid" : "simplelogin:57"
+    }
+  }
+}

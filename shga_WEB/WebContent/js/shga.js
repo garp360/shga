@@ -552,8 +552,8 @@ app.factory('authProvider', function($firebase, $q) {
 						uid : authData.uid,
 						roles : [ 'SHGA_USER' ],
 						email : registrant.username,
-						teebox : 'BLACK',
-						hcp : 10,
+						teebox : registrant.teebox,
+						hcp : registrant.hcp,
 						ghin : '0000000000',
 						pw : registrant.password1
 					};
