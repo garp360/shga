@@ -4,20 +4,20 @@
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
 <style type="text/css">
 body {
-	padding: 5px 20px;
+    padding: 5px 20px;
 }
 
 .hb-control-label {
-	white-space: nowrap;
-	padding-right: 7px;
+    white-space: nowrap;
+    padding-right: 7px;
 }
 
 .hb-badge-black {
-	background-color: black;
+    background-color: black;
 }
 
 .hb-badge-blue {
-	background-color: blue;
+    background-color: blue;
 }
 </style>
 <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.19/angular.min.js"></script>
@@ -28,65 +28,66 @@ body {
 <script type='text/javascript' src="js/shga.js"></script>
 </head>
 <body>
-	<div ng-controller="EventController">
-		<nav class="navbar navbar-default" role="navigation">
-			<div class="container-fluid">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#hb-shga-header-collapse">
-						<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#">SHGA</a>
-				</div>
-			</div>
-			<div class="collapse navbar-collapse" id="hb-shga-header-collapse">
-				<form ng-show="!isAuth" class="navbar-form navbar-right" role="form" name="loginForm" ng-submit="login(loginForm.$valid)" novalidate action="">
-					<!-- EMAIL -->
-					<div class="form-group">
-						<input placeholder="username" type="email" name="email" class="form-control" ng-model="sec.email" required>
-					</div>
-					<!-- PASSWORD -->
-					<div class="form-group">
-						<input placeholder="password" type="password" name="password" class="form-control" ng-model="sec.password" ng-minlength="3" ng-maxlength="8" required>
-					</div>
-					<!-- SUBMIT BUTTON -->
-					<button type="submit" class="btn btn-primary">Log In</button>
-					<button type="button" class="btn btn-link" ng-click="register()">Register</button>
-				</form>
-				<form ng-show="isAuth" class="navbar-form navbar-right" role="form" name="logoutForm" ng-submit="logout()" novalidate action="">
-					<!-- EMAIL -->
-					<div class="form-group">Logged in as {{user.firstName}} {{user.lastName}}</div>
-					<!-- SUBMIT BUTTON -->
-					<button type="submit" class="btn btn-primary">Logout</button>
-				</form>
-			</div>
-		</nav>
-		<div class="btn-toolbar" role="toolbar" ng-show="isUserInRole('SHGA_ADMIN')">
-			<div class="btn-group pull-right">
-				<button type="button" class="btn btn-primary" ng-click="createEvent()">Create Event</button>
-				<button type="button" class="btn btn-primary">Delete Event</button>
-				<button type="button" class="btn btn-primary">Update Event</button>
-				<button type="button" class="btn btn-primary">Add Golfer</button>
-				<button type="button" class="btn btn-primary">Remove Golfer</button>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12" style="margin: 4px 2px 2px 2px;" ng-repeat="shgaEvent in shgaEvents | currentEvents">
-				<div class="btn-group" dropdown>
-					<button type="button" class="btn dropdown-toggle" ng-class="{'btn-success' : shgaEvent.group == 'Sunday Group', 'btn-primary' : shgaEvent.group == 'Saturday Group'}" style="width: 350px;">
-						{{shgaEvent.group}} - {{formatDate(shgaEvent.timestamp)}}<span class="caret pull-right" style="margin-top: -15px;"></span>
-					</button>
-					<ul class="dropdown-menu" role="menu" style="width: 350px;">
-						<li ng-show="isAuth"><a href="#" ng-click="signUp(shgaEvent, user)">Sign Up</a></li>
-						<li ng-show="isAuth"><a href="#">Drop Out</a></li>
-						<li ng-show="isUserInRole('SHGA_ADMIN')"><a href="#" ng-click="deleteEvent(shgaEvent)">Delete Event</a></li>
-					</ul>
-				</div>
-				<ul class="nav nav-pills" ng-repeat="golfer in shgaEvent.golfers">
-			      <li>{{golfer.lastName}}, {{golfer.firstName}}</li>
-			      <li><span class="badge" ng-class="{'hb-badge-black' : golfer.teebox == 'BLACK', 'hb-badge-blue' : golfer.teebox == 'BLUE'}">{{golfer.hcp}}</span></li>
-			    </ul>
-			</div>
-		</div>
-	</div>
+    <div ng-controller="EventController">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#hb-shga-header-collapse">
+                        <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">SHGA</a>
+                </div>
+            </div>
+            <div class="collapse navbar-collapse" id="hb-shga-header-collapse">
+                <form ng-show="!isAuth" class="navbar-form navbar-right" role="form" name="loginForm" ng-submit="login(loginForm.$valid)" novalidate action="">
+                    <!-- EMAIL -->
+                    <div class="form-group">
+                        <input placeholder="username" type="email" name="email" class="form-control" ng-model="sec.email" required>
+                    </div>
+                    <!-- PASSWORD -->
+                    <div class="form-group">
+                        <input placeholder="password" type="password" name="password" class="form-control" ng-model="sec.password" ng-minlength="3" ng-maxlength="8" required>
+                    </div>
+                    <!-- SUBMIT BUTTON -->
+                    <button type="submit" class="btn btn-primary">Log In</button>
+                    <button type="button" class="btn btn-link" ng-click="register()">Register</button>
+                </form>
+                <form ng-show="isAuth" class="navbar-form navbar-right" role="form" name="logoutForm" ng-submit="logout()" novalidate action="">
+                    <!-- EMAIL -->
+                    <div class="form-group">Logged in as {{user.firstName}} {{user.lastName}}</div>
+                    <!-- SUBMIT BUTTON -->
+                    <button type="submit" class="btn btn-primary">Logout</button>
+                    <button type="button" class="btn btn-link" ng-click="editProfile(user)">Edit Profile</button>
+                </form>
+            </div>
+        </nav>
+        <div class="btn-toolbar" role="toolbar" ng-show="isUserInRole('SHGA_ADMIN')">
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-primary" ng-click="createEvent()">Create Event</button>
+                <button type="button" class="btn btn-primary">Delete Event</button>
+                <button type="button" class="btn btn-primary">Update Event</button>
+                <button type="button" class="btn btn-primary">Add Golfer</button>
+                <button type="button" class="btn btn-primary">Remove Golfer</button>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="margin: 4px 2px 2px 2px;" ng-repeat="shgaEvent in shgaEvents | currentEvents">
+                <div class="btn-group" dropdown>
+                    <button type="button" class="btn dropdown-toggle" ng-class="{'btn-success' : shgaEvent.group == 'Sunday Group', 'btn-primary' : shgaEvent.group == 'Saturday Group'}" style="width: 350px;">
+                        {{shgaEvent.group}} - {{formatDate(shgaEvent.timestamp)}}<span class="caret pull-right" style="margin-top: -15px;"></span>
+                    </button>
+                    <ul ng-show="isAuth" class="dropdown-menu" role="menu" style="width: 350px;">
+                        <li ng-show="!isSignedUp(shgaEvent, user.uid)"><a href="#" ng-click="signUp(shgaEvent, user)">Sign Up</a></li>
+                        <li ng-show="isSignedUp(shgaEvent, user.uid)"><a href="#" ng-click="dropOut(shgaEvent, user.uid)">Drop Out</a></li>
+                        <li ng-show="isUserInRole('SHGA_ADMIN')"><a href="#" ng-click="deleteEvent(shgaEvent)">Delete Event</a></li>
+                    </ul>
+                </div>
+                <ul class="nav nav-pills" ng-repeat="golfer in shgaEvent.golfers" style="width: 350px;margin-top:5px;">
+                  <li style="width: 220px;padding:4px 15px 4px 5px;">{{golfer.firstName}} {{golfer.lastName}}</li>
+                  <li><span class="badge" ng-class="{'hb-badge-black' : golfer.teebox == 'BLACK', 'hb-badge-blue' : golfer.teebox == 'BLUE'}" style="width:50px;margin-right:8px;">{{golfer.hcp}}</span><button ng-show="isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" ng-click="dropOut(shgaEvent, golfer.uid)">Remove</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
