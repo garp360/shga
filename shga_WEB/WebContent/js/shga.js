@@ -49,7 +49,8 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 	};
 
 	$scope.editProfile = function(size) {
-
+		$scope.profile = $scope.user;
+		
 		var modalInstance = $modal.open({
 			templateUrl : 'partial/shga-golfer-form.html',
 			controller : 'ProfileController',
@@ -89,12 +90,7 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 			templateUrl : 'partial/shga-registration-form.html',
 			controller : 'RegistrationController',
 			size : size,
-			backdrop : 'static',
-			resolve : {
-				registrant : function() {
-					return $scope.registrant;
-				}
-			}
+			backdrop : 'static'
 		});
 
 		modalInstance.result.then(function(registrant) {
@@ -205,10 +201,8 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 	};
 });
 
-app.controller('ProfileController', function($scope, $modalInstance, profile, shgaDataProvider) {
-	var rootRef = new Firebase("https://shga.firebaseio.com");
-	var authData = rootRef.getAuth();
-
+app.controller('ProfileController', function($scope, $modalInstance, profile) {
+	$scope.profile = profile;
 	$scope.teeboxes = [
 		                 {color: 'Gold'},
 		                 {color: 'Black'},
@@ -217,14 +211,18 @@ app.controller('ProfileController', function($scope, $modalInstance, profile, sh
 		                 {color: 'Green'},
 		                 {color: 'Burgundy'}
 		               ];
+	var found = false;
+	angular.forEach($scope.teeboxes, function(teebox) {
+		if(teebox.color.toLowerCase() == profile.teebox.color.toLowerCase() && !found) {
+			found = true;
+			$scope.profile.teebox = teebox;
+		}
+	});
 
-	$scope.title = "Edit Profile";
-	$scope.profile = shgaDataProvider.getGolferByUserId(authData.uid);
-	$scope.profile.teebox = $scope.teeboxes[2]
+	$scope.title = "Edit Profile (" + profile.firstName + " " + profile.lastName + ")";
 	
 	$scope.ok = function() {
-		var profile = $scope.profile;
-		$modalInstance.close(profile);
+		$modalInstance.close($scope.profile);
 	};
 
 	$scope.cancel = function() {
@@ -233,7 +231,7 @@ app.controller('ProfileController', function($scope, $modalInstance, profile, sh
 	};
 });
 
-app.controller('RegistrationController', function($scope, $modalInstance, registrant) {
+app.controller('RegistrationController', function($scope, $modalInstance) {
 	$scope.title = "SHGA Registration";
 	$scope.teeboxes = [
 		                 {color: 'Gold'},
@@ -245,7 +243,7 @@ app.controller('RegistrationController', function($scope, $modalInstance, regist
 		               ];
 	$scope.registrant = {
 			hcp : 10.0,
-			teebox : $scope.teeboxes[2]
+			teebox : $scope.teeboxes[1]
 	};
 	
 	$scope.ok = function() {
