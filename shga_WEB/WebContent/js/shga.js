@@ -64,20 +64,18 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 		});
 
 		modalInstance.result.then(function(profile) {
-			//$log.info('Profile: ' + profile);
-			var user = $scope.user;
 			var allEvents = $scope.shgaEvents;
 			shgaDataProvider.updateProfile(rootRef, {
 				firstName : profile.firstName,
 				lastName : profile.lastName,
-				nickname : user.nickname,
-				uid : user.uid,
-				roles : user.roles,
+				nickname : profile.nickname,
+				uid : profile.uid,
+				roles : profile.roles,
 				email : profile.email,
 				teebox : profile.teebox,
 				hcp : profile.hcp,
-				ghin : user.ghin,
-				pw : user.pw
+				ghin : profile.ghin,
+				pw : profile.pw
 			},allEvents);
 		}, function() {
 			$log.info('Modal dismissed at: ' + new Date());
@@ -85,7 +83,7 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 	};
 
 	$scope.register = function(size) {
-
+		
 		var modalInstance = $modal.open({
 			templateUrl : 'partial/shga-registration-form.html',
 			controller : 'RegistrationController',
@@ -94,7 +92,6 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 		});
 
 		modalInstance.result.then(function(registrant) {
-			//$log.info('Registrant: ' + registrant);
 			authProvider.createUser(rootRef, {
 				email : registrant.username,
 				password : registrant.password1
