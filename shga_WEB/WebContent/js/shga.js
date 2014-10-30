@@ -516,27 +516,18 @@ app.factory('shgaDataProvider', function($firebase, $q) {
 	shgaDataService.getGolferByUserId = function setLoggedInAs(userId) {
 		var golferRef = new Firebase("https://shga.firebaseio.com/golfers/" + userId);
 		var golfer = $firebase(golferRef).$asObject();
+		
 		return golfer;
 	};
 
 	function _convertToTimestamp(dateString) {
-		//console.log("dateString = " + dateString);
-
 		var d = new Date(Date.parse(dateString));
-		//console.log("d = " + d);
-
 		var n = d.toLocaleDateString();
-		//console.log("n = " + n);
-
 		var t = new Date(Date.parse(n));
-		//console.log("t = " + t);
-
 		var timestamp = t.getTime();
-		//console.log("timestamp = " + timestamp);
-
+		
 		return timestamp;
-	}
-	;
+	};
 
 	return shgaDataService;
 });
