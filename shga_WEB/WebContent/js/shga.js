@@ -51,7 +51,7 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 	$scope.editProfile = function(size) {
 
 		var modalInstance = $modal.open({
-			templateUrl : 'partial/shga-profile-form.html',
+			templateUrl : 'partial/shga-golfer-form.html',
 			controller : 'ProfileController',
 			size : size,
 			backdrop : 'static',
@@ -220,7 +220,8 @@ app.controller('ProfileController', function($scope, $modalInstance, profile, sh
 
 	$scope.title = "Edit Profile";
 	$scope.profile = shgaDataProvider.getGolferByUserId(authData.uid);
-
+	$scope.profile.teebox = $scope.teeboxes[2]
+	
 	$scope.ok = function() {
 		var profile = $scope.profile;
 		$modalInstance.close(profile);
