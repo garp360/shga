@@ -13,7 +13,7 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 	$scope.registrant = {};
 	$scope.shgaEvent = {};
 	$scope.shgaEvents = shgaDataProvider.getEventData();
-
+	
 	rootRef.onAuth(function globalOnAuth(authData) {
 		if (authData) {
 			$scope.isAuth = true;
@@ -51,7 +51,7 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 	$scope.editProfile = function(size) {
 
 		var modalInstance = $modal.open({
-			templateUrl : 'partial/profile-form.html',
+			templateUrl : 'partial/shga-profile-form.html',
 			controller : 'ProfileController',
 			size : size,
 			backdrop : 'static',
@@ -86,7 +86,7 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 	$scope.register = function(size) {
 
 		var modalInstance = $modal.open({
-			templateUrl : 'partial/registration-form.html',
+			templateUrl : 'partial/shga-registration-form.html',
 			controller : 'RegistrationController',
 			size : size,
 			backdrop : 'static',
@@ -196,12 +196,9 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 
 		modalInstance.result.then(function(shgaEvent) {
 			// $log.info('shgaEvent: ' + shgaEvent);
-			shgaDataProvider.createShgaEvent(rootRef, shgaEvent).then(function() {
-				$log.info('Event Created Successfully');
-				$scope.shgaEvents = shgaDataProvider.getEventData();
-			}, function(err) {
-				$log.info('SHGA Event Error: ' + err);
-			});
+			shgaDataProvider.createShgaEvent(rootRef, shgaEvent);
+			$log.info('Event Created Successfully');
+			//$scope.shgaEvents = shgaDataProvider.getEventData();
 		}, function() {
 			$log.info('Modal dismissed at: ' + new Date());
 		});
@@ -211,6 +208,16 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 app.controller('ProfileController', function($scope, $modalInstance, profile, shgaDataProvider) {
 	var rootRef = new Firebase("https://shga.firebaseio.com");
 	var authData = rootRef.getAuth();
+
+	$scope.teeboxes = [
+		                 {color: 'Gold'},
+		                 {color: 'Black'},
+		                 {color: 'Blue'},
+		                 {color: 'White'},
+		                 {color: 'Green'},
+		                 {color: 'Burgundy'}
+		               ];
+
 	$scope.title = "Edit Profile";
 	$scope.profile = shgaDataProvider.getGolferByUserId(authData.uid);
 
@@ -220,13 +227,26 @@ app.controller('ProfileController', function($scope, $modalInstance, profile, sh
 	};
 
 	$scope.cancel = function() {
+		$scope.profile = {};
 		$modalInstance.dismiss('cancel');
 	};
 });
 
 app.controller('RegistrationController', function($scope, $modalInstance, registrant) {
 	$scope.title = "SHGA Registration";
-
+	$scope.teeboxes = [
+		                 {color: 'Gold'},
+		                 {color: 'Black'},
+		                 {color: 'Blue'},
+		                 {color: 'White'},
+		                 {color: 'Green'},
+		                 {color: 'Burgundy'}
+		               ];
+	$scope.registrant = {
+			hcp : 10.0,
+			teebox : $scope.teeboxes[2]
+	};
+	
 	$scope.ok = function() {
 		var sec = $scope.registrant;
 		$modalInstance.close(sec);
@@ -242,14 +262,18 @@ app.controller('ManageEventController', function($scope, $modalInstance, shgaEve
 	$scope.mstep = 1;
 	$scope.teeTime = moment(shgaEvent.dt).hour(7).minute(36);
 
-	$scope.groups = [ 'Saturday Group', 'Sunday Group' ];
-	$scope.group = $scope.groups[0];
+	$scope.golfGroups = [
+	                 {name:'Saturday Group', organizer:'mikepulver@aol.com'},
+	                 {name:'Sunday Group', organizer:'garth.pidcock@gmail.com'}
+	               ];
+	$scope.golfGroup = $scope.golfGroups[0];
 
-	$scope.courses = [ 'South Hampton', 'Cimarrone', 'St. Johns' ];
-	$scope.course = $scope.courses[0];
+	$scope.courses = [ {name: 'South Hampton', tees : [ 'Green', 'White', 'Blue', 'Black', 'Gold' ]}, 
+	                   {name : 'Cimarrone', tees : [ 'Red', 'White', 'Blue', 'Black' ]},
+	                   {name : 'St. Johns', tees : [ 'Red', 'White', 'Blue' ]},];
 
 	$scope.shgaEvent = {
-		group : $scope.groups[0],
+		group : $scope.golfGroups[0],
 		course : $scope.courses[0],
 		teeTimes : []
 	};
