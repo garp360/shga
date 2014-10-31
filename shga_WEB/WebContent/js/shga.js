@@ -195,6 +195,27 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 			$log.info('Modal dismissed at: ' + new Date());
 		});
 	};
+	
+	$scope.manageGolfers = function(shgaEvent) {
+		var modalInstance = $modal.open({
+			templateUrl : 'partial/shga-event-golfers-form.html',
+			controller : 'ManageEventGolfersController',
+			backdrop : 'static',
+			size : 'lg',
+			resolve : {
+				shgaEvent : function() {
+					return shgaEvent;
+				}
+			}
+		});
+
+		modalInstance.result.then(function(shgaEvent) {
+			$log.info('Managed Golfers Successfully');
+			shgaDataProvider.addGolfers(rootRef, shgaEvent, shgaEvent.golfers);
+		}, function() {
+			$log.info('Modal dismissed at: ' + new Date());
+		});
+	};
 });
 
 app.controller('ProfileController', function($scope, $modalInstance, profile) {
@@ -349,6 +370,74 @@ app.controller('ManageEventController', function($scope, $modalInstance, shgaEve
 	$scope.format = $scope.formats[0];
 });
 
+app.controller('ManageEventGolfersController', function($scope, $modalInstance, shgaEvent, shgaDataProvider) {
+	$scope.shgaEvent = shgaEvent;
+	$scope.allGolfers = shgaDataProvider.getGolferData();
+	$scope.scheduledGolfers = shgaEvent.golfers;
+	filterForEvent();
+	
+	
+	$scope.addGolfer = function(isAll) {
+		if(isAll) {
+			
+		} else {
+			
+		}
+	};
+
+	$scope.removeGolfer = function(isAll) {
+		if(isAll) {
+			
+		} else {
+			
+		}
+	};
+	
+	$scope.formatDate = function(timestamp) {
+		var mDate = moment(timestamp).format("dddd, MMMM Do YYYY");
+		return mDate;
+	};
+	
+//	function prepScheduledGolfers() {
+//		var filteredList = [];
+//		if(shgaEvent.golfers) {
+//			for (var i = 0; i < shgaEvent.golfers.length; i++) {
+//				filteredList.push(shgaEvent.golfers[i]);
+//			}
+//		}
+//		return filteredList;
+//	};
+
+	function filterForEvent() {
+		$scope.availableGolfers = [];
+		
+		angular.forEach($scope.allGolfers, function(golfer){
+			if (!containsGolfer(golfer.uid)) {
+				$scope.availableGolfers.push(golfer);
+			}
+		});
+	};
+	
+	function containsGolfer(golferId) {
+		var found = false;
+		for (var i = 0; i < shgaEvent.golfers.length; i++) {
+			if (shgaEvent.golfers[i].uid == golferId && !found) {
+				found = true;
+				break;
+			}
+		}
+		return found;
+	}
+	
+	$scope.ok = function() {
+		$modalInstance.close($scope.shgaEvent);
+	};
+	
+	$scope.cancel = function() {
+		$modalInstance.dismiss('cancel');
+	};
+});
+
 app.filter('currentEvents', function() {
 
 	return function(shgaEvents) {
@@ -379,6 +468,14 @@ app.factory('shgaDataProvider', function($firebase, $q) {
 		var eventsArray = sync.$asArray();
 
 		return eventsArray;
+	};
+
+	shgaDataService.getGolferData = function getGolferData() {
+		var ref = new Firebase("https://shga.firebaseio.com/golfers");
+		var sync = $firebase(ref);
+		var golfersArray = sync.$asArray();
+		
+		return golfersArray;
 	};
 	
 	function _getFutureEvents(shgaEvents) {

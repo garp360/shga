@@ -87,7 +87,7 @@ body {
                         <div class="collapse navbar-collapse" collapse="isCollapsed">
                             <div class="navbar-form navbar-right">
 	                            <button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-sm" ng-click="deleteEvent(shgaEvent)">Delete Event</button>
-	                            <button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-sm">Add Golfers</button>
+	                            <button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-sm" ng-click="manageGolfers(shgaEvent)">Add Golfers</button>
 	                            <button ng-show="isAuth && !isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-default btn-sm" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
 	                            <button ng-show="isAuth && isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-default btn-sm" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
                             </div>
