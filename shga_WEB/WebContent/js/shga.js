@@ -18,7 +18,6 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 		if (authData) {
 			$scope.isAuth = true;
 			$scope.user = shgaDataProvider.getGolferByUserId(authData.uid);
-
 		} else {
 			$scope.isAuth = false;
 			$scope.user = {};

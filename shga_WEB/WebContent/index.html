@@ -5,7 +5,7 @@
 <link rel="stylesheet" href="css/shga.css">
 <style type="text/css">
 body {
-    padding: 10px;
+    padding: 10px 10px 70px 10px;
 }
 </style>
 <script type='text/javascript' src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.19/angular.min.js"></script>
@@ -51,24 +51,26 @@ body {
                             <button type="button" class="btn btn-link" ng-click="register()">Register</button>
                         </form>
                         <form ng-show="isAuth" role="form" name="logoutForm" ng-submit="logout()" novalidate action="">
-                            <!-- EMAIL -->
-                            <div class="form-group">Logged in as {{user.firstName}} {{user.lastName}}</div>
-                            <!-- SUBMIT BUTTON -->
-                            <button type="submit" class="btn btn-primary">Logout</button>
-                            <button type="button" class="btn btn-link" ng-click="editProfile(user)">Edit Profile</button>
+                            <div class="form-group" style="padding-right:20px;">Logged in as {{user.firstName}} {{user.lastName}}</div>
+                            <button type="submit" class="btn btn-primary btn-xs">Logout</button>
+                            <button type="button" class="btn btn-primary btn-xs" ng-click="editProfile(user)">Edit Profile</button>
                         </form>
-                    </div>
-                    <div ng-show="isUserInRole('SHGA_ADMIN')" class="nav navbar-nav navbar-right" style="padding-right: 20px;">
-                        <button type="button" class="btn btn-default btn-xs navbar-btn" ng-click="createEvent()">Create Event</button>
-                        <button type="button" class="btn btn-default btn-xs navbar-btn">Create Golfer</button>
                     </div>
                 </div>
                 <!-- /.navbar-collapse -->
             </div>
             <!-- /.container-fluid -->
         </nav>
+        <nav ng-show="isAuth && isUserInRole('SHGA_ADMIN')" class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-form navbar-right" style="padding-right: 40px;">
+					<button ng-show="isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs navbar-btn" ng-click="createEvent()">Create Event</button>
+					<button ng-show="isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs navbar-btn">Create Golfer</button>
+				</div>
+			</div>
+		</nav>
         <div class="row" style="margin: 4px 2px 2px 2px;" ng-repeat="shgaEvent in shgaEvents | currentEvents">
-            <div class="col-md-12">
+            <div class="col-xs-12 col-sm-12 col-med-12 col-lg-12">
                 <nav ng-class="{'hb-navbar-black navbar navbar-default' : shgaEvent.group.name == 'Sunday Group', 'hb-navbar-blue navbar navbar-default' : shgaEvent.group.name == 'Saturday Group'}">
                     <div class="container-fluid">
                         <!-- Brand and toggle get grouped for better mobile display -->
@@ -76,24 +78,24 @@ body {
                             <button ng-show="isAuth" type="button" class="blue navbar-toggle collapsed" ng-click="isCollapsed = !isCollapsed">
                                 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                             </button>
-                            <a ng-class="{'hb-navbar-black navbar-text navbar-left hb-brand' : shgaEvent.group.name == 'Sunday Group', 'hb-navbar-blue navbar-text navbar-left hb-brand' : shgaEvent.group.name == 'Saturday Group'}" href="#">{{shgaEvent.group.name}} - {{formatDate(shgaEvent.timestamp)}}</a>
+                            <div ng-class="{'hb-navbar-black navbar-text navbar-left hb-brand' : shgaEvent.group.name == 'Sunday Group', 'hb-navbar-blue navbar-text navbar-left hb-brand' : shgaEvent.group.name == 'Saturday Group'}">
+                            	{{shgaEvent.group.name}} - {{formatDate(shgaEvent.timestamp)}}<br />{{shgaEvent.course.name}}
+                        	</div>
                         </div>
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
-                        <div class="collapse blue navbar-collapse" collapse="isCollapsed">
-                            <div class="blue navbar-form navbar-right">
-                                <div ng-show="isAuth" class="btn-group">
-                                    <button ng-show="isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default" ng-click="deleteEvent(shgaEvent)">Delete Event</button>
-                                    <button ng-show="isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default">Add Golfers</button>
-                                    <button ng-show="!isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-default" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
-                                    <button ng-show="isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-default" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
-                                </div>
+                        <div class="collapse navbar-collapse" collapse="isCollapsed">
+                            <div class="navbar-form navbar-right">
+	                            <button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-sm" ng-click="deleteEvent(shgaEvent)">Delete Event</button>
+	                            <button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-sm">Add Golfers</button>
+	                            <button ng-show="isAuth && !isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-default btn-sm" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
+	                            <button ng-show="isAuth && isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-default btn-sm" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
                             </div>
                         </div>
                     </div>
                 </nav>
                 <ul class="nav nav-pills" ng-repeat="golfer in shgaEvent.golfers" style="width: 350px; margin-top: 5px;">
-                    <li style="width: 220px; padding: 4px 15px 4px 5px;">{{golfer.firstName}} {{golfer.lastName}}</li>
+                    <li style="padding: 4px 15px 50px 5px;">{{golfer.firstName}} {{golfer.lastName}}</li>
                     <li><span class="badge" ng-class="{'hb-badge-black' : golfer.teebox.color == 'Black', 'hb-badge-blue' : golfer.teebox.color == 'Blue'}" style="width: 50px; margin-right: 8px;">{{golfer.hcp}}</span>
                         <button ng-show="isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" ng-click="dropOut(shgaEvent, golfer.uid)">Remove</button></li>
                 </ul>
