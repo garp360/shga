@@ -100,7 +100,7 @@ body {
                 		<col width="1%"/>
                 		<col width="1%"/>
                 	</colgroup>
-                	<tr ng-repeat="golfer in shgaEvent.golfers">
+                	<tr ng-repeat="golfer in shgaEvent.golfers | orderBy:['lastName','firstName']">
                 		<td><h4 class="text-nowrap">{{golfer.firstName}} {{golfer.lastName}}</h4></td>
                 		<td><h4><span style="width:55px;" ng-class="{'label label-sm pull-right hb-badge-black' : golfer.teebox.color == 'Black', 'label label-sm pull-right hb-badge-blue' : golfer.teebox.color == 'Blue'}">{{golfer.hcp}}</span></h4></td>
                 		<td ng-show="isUserInRole('SHGA_ADMIN')"><h4><button type="button" class="btn btn-danger btn-xs pull-right" ng-click="dropOut(shgaEvent, golfer.uid)">Remove</button></h4></td>

@@ -1,45 +1,45 @@
 <div class="modal-header">
-    <h3 class="modal-title">Manage Players</h3>
+	<h3 class="modal-title">Manage Players</h3>
 </div>
 <div class="modal-body">
 	<div>
 		<div class="form-group">
-            <label for="inputGroup1" class="col-sm-3 control-label hb-control-label">Event</label>
-            <p class="form-control-static">{{shgaEvent.group.name}}</p>
-        </div>
+			<label for="inputGroup1" class="col-sm-3 control-label hb-control-label">Event</label>
+			<p class="form-control-static">{{shgaEvent.group.name}}</p>
+		</div>
 		<div class="form-group">
-            <label for="inputGroup1" class="col-sm-3 control-label hb-control-label">Date</label>
-            <p class="form-control-static">{{formatDate(shgaEvent.timestamp)}}</p>
-        </div>
+			<label for="inputGroup1" class="col-sm-3 control-label hb-control-label">Date</label>
+			<p class="form-control-static">{{formatDate(shgaEvent.timestamp)}}</p>
+		</div>
 		<div class="form-group">
-            <label for="inputGroup1" class="col-sm-3 control-label hb-control-label">Course</label>
-            <p class="form-control-static">{{shgaEvent.course.name}}</p>
-        </div>
+			<label for="inputGroup1" class="col-sm-3 control-label hb-control-label">Course</label>
+			<p class="form-control-static">{{shgaEvent.course.name}}</p>
+		</div>
 	</div>
-    <div class="form-inline" role="form">
-        <div class="form-group">
-            	
-                <select id="selectGroup1" multiple size="10" style="width:220px">
-                	<option ng-repeat="availableGolfer in availableGolfers">{{availableGolfer.firstName}} {{availableGolfer.lastName}}</option>
-                </select>
-       
-        </div>
-        <div class="form-group">
-        	<button type="button" class="btn btn-primary btn-sm btn-block"><span class="glyphicon glyphicon-chevron-right"></span><span class="glyphicon glyphicon-chevron-right"></span></button>
-			<button type="button" class="btn btn-default btn-sm btn-block"><span class="glyphicon glyphicon-chevron-right"></span></button>
-			<button type="button" class="btn btn-default btn-sm btn-block"><span class="glyphicon glyphicon-chevron-left"></span></button>
-			<button type="button" class="btn btn-default btn-sm btn-block"><span class="glyphicon glyphicon-chevron-left"></span><span class="glyphicon glyphicon-chevron-left"></span></button>
-        </div>
-        <div class="form-group">
-           
-                <select id="selectGroup2" multiple size="10" style="width:220px">
-                	<option ng-repeat="golfer in shgaEvent.golfers">{{golfer.firstName}} {{golfer.lastName}}</option>
-                </select>
-       
-        </div>
-  	</div>
+	<div class="form-inline" role="form">
+		<div class="form-group">
+			<select ng-model="availableGolfersSelected" id="selectGroup1" multiple size="10" style="width: 220px" ng-options="availableGolfer as availableGolfer.firstName + ' ' + availableGolfer.lastName  for availableGolfer in availableGolfers | orderBy:['lastName','firstName']"></select>
+		</div>
+		<div class="form-group">
+			<button type="button" class="btn btn-primary btn-sm btn-block" ng-click="addGolfer(true)">
+				<span class="glyphicon glyphicon-chevron-right"></span><span class="glyphicon glyphicon-chevron-right"></span>
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-block" ng-click="addGolfer(false)">
+				<span class="glyphicon glyphicon-chevron-right"></span>
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-block" ng-click="removeGolfer(false)">
+				<span class="glyphicon glyphicon-chevron-left"></span>
+			</button>
+			<button type="button" class="btn btn-default btn-sm btn-block" ng-click="removeGolfer(true)">
+				<span class="glyphicon glyphicon-chevron-left"></span><span class="glyphicon glyphicon-chevron-left"></span>
+			</button>
+		</div>
+		<div class="form-group">
+			<select ng-model="scheduledGolfersSelected" id="selectGroup2" multiple size="10" style="width: 220px" ng-options="scheduledGolfer as scheduledGolfer.firstName + ' ' + scheduledGolfer.lastName  for scheduledGolfer in scheduledGolfers | orderBy:['lastName','firstName']"></select>
+		</div>
+	</div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="ok()">OK</button>
-    <button class="btn btn-default" ng-click="cancel()">Cancel</button>
+	<button class="btn btn-primary" ng-click="ok()">OK</button>
+	<button class="btn btn-default" ng-click="cancel()">Cancel</button>
 </div>

@@ -13,6 +13,7 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 	$scope.registrant = {};
 	$scope.shgaEvent = {};
 	$scope.shgaEvents = shgaDataProvider.getEventData();
+	$scope.shgaGolfers = shgaDataProvider.getGolferData();
 	
 	rootRef.onAuth(function globalOnAuth(authData) {
 		if (authData) {
@@ -205,13 +206,31 @@ app.controller("EventController", function($scope, $firebase, $modal, $log, auth
 			resolve : {
 				shgaEvent : function() {
 					return shgaEvent;
+				},
+				allGolfers : function() {
+					return $scope.shgaGolfers;
 				}
 			}
 		});
 
-		modalInstance.result.then(function(shgaEvent) {
+		modalInstance.result.then(function(scheduleGolfers) {
+			var golfers = [];
+
+			angular.forEach(scheduleGolfers, function(golfer) {
+				golfers.push({
+					uid : golfer.uid,
+					firstName : golfer.firstName,
+					lastName : golfer.lastName,
+					hcp : golfer.hcp,
+					teebox : golfer.teebox,
+					email : golfer.email
+				});
+			});
+			
 			$log.info('Managed Golfers Successfully');
-			shgaDataProvider.addGolfers(rootRef, shgaEvent, shgaEvent.golfers);
+			shgaDataProvider.addGolfers(rootRef, shgaEvent, golfers);
+		},function(err) {
+			$log.info('Managed Golfers Failed');
 		}, function() {
 			$log.info('Modal dismissed at: ' + new Date());
 		});
@@ -370,43 +389,60 @@ app.controller('ManageEventController', function($scope, $modalInstance, shgaEve
 	$scope.format = $scope.formats[0];
 });
 
-app.controller('ManageEventGolfersController', function($scope, $modalInstance, shgaEvent, shgaDataProvider) {
+app.controller('ManageEventGolfersController', function($scope, $modalInstance, shgaEvent, allGolfers) {
 	$scope.shgaEvent = shgaEvent;
-	$scope.allGolfers = shgaDataProvider.getGolferData();
-	$scope.scheduledGolfers = shgaEvent.golfers;
+	$scope.allGolfers = allGolfers;
+	$scope.scheduledGolfers = angular.copy(shgaEvent.golfers);
+	$scope.availableGolfers = [];
+	$scope.availableGolfersSelected = [];
+	$scope.scheduledGolfersSelected = [];
+	
 	filterForEvent();
 	
-	
 	$scope.addGolfer = function(isAll) {
+		var scheduled = [];
+		
 		if(isAll) {
-			
+			angular.forEach($scope.availableGolfers, function(availableGolfer){
+				scheduled.push(availableGolfer);
+			});
 		} else {
-			
+			angular.forEach($scope.availableGolfersSelected, function(availableGolfer){
+				scheduled.push(availableGolfer);
+			});
 		}
+
+		angular.forEach($scope.scheduledGolfers, function(scheduledGolfers){
+			scheduled.push(scheduledGolfers);
+		});
+		
+		$scope.scheduledGolfers = scheduled;
+		filterForEvent();
 	};
 
 	$scope.removeGolfer = function(isAll) {
+		var scheduled = $scope.scheduledGolfers;
+		
 		if(isAll) {
-			
+			scheduled = [];
 		} else {
-			
+			angular.forEach($scope.scheduledGolfersSelected, function (scheduledGolfer, key) {
+	            for (var i = scheduled.length - 1; i >= 0; i--) {
+	                if (scheduled[i].uid == scheduledGolfer.uid) {
+	                	scheduled.splice(i, 1);
+	                }
+	            }
+	        });
 		}
+
+		$scope.scheduledGolfers = scheduled;
+		filterForEvent();
 	};
 	
 	$scope.formatDate = function(timestamp) {
 		var mDate = moment(timestamp).format("dddd, MMMM Do YYYY");
 		return mDate;
 	};
-	
-//	function prepScheduledGolfers() {
-//		var filteredList = [];
-//		if(shgaEvent.golfers) {
-//			for (var i = 0; i < shgaEvent.golfers.length; i++) {
-//				filteredList.push(shgaEvent.golfers[i]);
-//			}
-//		}
-//		return filteredList;
-//	};
 
 	function filterForEvent() {
 		$scope.availableGolfers = [];
@@ -420,8 +456,8 @@ app.controller('ManageEventGolfersController', function($scope, $modalInstance, 
 	
 	function containsGolfer(golferId) {
 		var found = false;
-		for (var i = 0; i < shgaEvent.golfers.length; i++) {
-			if (shgaEvent.golfers[i].uid == golferId && !found) {
+		for (var i = 0; i < $scope.scheduledGolfers.length; i++) {
+			if ($scope.scheduledGolfers[i].uid == golferId && !found) {
 				found = true;
 				break;
 			}
@@ -430,7 +466,7 @@ app.controller('ManageEventGolfersController', function($scope, $modalInstance, 
 	}
 	
 	$scope.ok = function() {
-		$modalInstance.close($scope.shgaEvent);
+		$modalInstance.close($scope.scheduledGolfers);
 	};
 	
 	$scope.cancel = function() {
