@@ -78,9 +78,9 @@ body {
                             <button ng-show="isAuth" type="button" class="blue navbar-toggle collapsed" ng-click="isCollapsed = !isCollapsed">
                                 <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
                             </button>
-                            <div ng-class="{'hb-navbar-black navbar-text navbar-left hb-brand' : shgaEvent.group.name == 'Sunday Group', 'hb-navbar-blue navbar-text navbar-left hb-brand' : shgaEvent.group.name == 'Saturday Group'}">
-                            	{{shgaEvent.group.name}} - {{formatDate(shgaEvent.timestamp)}}<br />{{shgaEvent.course.name}}
-                        	</div>
+                            <h4 ng-class="{'hb-navbar-black navbar-text navbar-left' : shgaEvent.group.name == 'Sunday Group', 'hb-navbar-blue navbar-text navbar-left' : shgaEvent.group.name == 'Saturday Group'}">
+                            	{{shgaEvent.group.name}} - {{shgaEvent.course.name}}<br />{{formatDate(shgaEvent.timestamp)}}
+                        	</h4>
                         </div>
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -88,17 +88,24 @@ body {
                             <div class="navbar-form navbar-right">
 	                            <button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-sm" ng-click="deleteEvent(shgaEvent)">Delete Event</button>
 	                            <button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-sm" ng-click="manageGolfers(shgaEvent)">Add Golfers</button>
-	                            <button ng-show="isAuth && !isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-default btn-sm" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
-	                            <button ng-show="isAuth && isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-default btn-sm" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
+	                            <button ng-show="isAuth && !isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-success btn-sm" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
+	                            <button ng-show="isAuth && isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-danger btn-sm" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
                             </div>
                         </div>
                     </div>
                 </nav>
-                <ul class="nav nav-pills" ng-repeat="golfer in shgaEvent.golfers" style="width: 350px; margin-top: 5px;">
-                    <li style="padding: 4px 15px 50px 5px;">{{golfer.firstName}} {{golfer.lastName}}</li>
-                    <li><span class="badge" ng-class="{'hb-badge-black' : golfer.teebox.color == 'Black', 'hb-badge-blue' : golfer.teebox.color == 'Blue'}" style="width: 50px; margin-right: 8px;">{{golfer.hcp}}</span>
-                        <button ng-show="isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" ng-click="dropOut(shgaEvent, golfer.uid)">Remove</button></li>
-                </ul>
+                <table class="table table-bordered table-hover" style="width:60%;">
+                	<colgroup>
+                		<col />
+                		<col width="1%"/>
+                		<col width="1%"/>
+                	</colgroup>
+                	<tr ng-repeat="golfer in shgaEvent.golfers">
+                		<td><h4 class="text-nowrap">{{golfer.firstName}} {{golfer.lastName}}</h4></td>
+                		<td><h4><span style="width:55px;" ng-class="{'label label-sm pull-right hb-badge-black' : golfer.teebox.color == 'Black', 'label label-sm pull-right hb-badge-blue' : golfer.teebox.color == 'Blue'}">{{golfer.hcp}}</span></h4></td>
+                		<td ng-show="isUserInRole('SHGA_ADMIN')"><h4><button type="button" class="btn btn-danger btn-xs pull-right" ng-click="dropOut(shgaEvent, golfer.uid)">Remove</button></h4></td>
+                	</tr>
+                </table>
             </div>
         </div>
     </div>
