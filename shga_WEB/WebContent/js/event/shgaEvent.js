@@ -341,11 +341,16 @@ angular.module('shgaApp.Event', []).controller("EventController", ["$scope", "$f
 }).controller('ManageEventGolfersController', [ "$scope", "$modalInstance", "shgaEvent", "allGolfers", function($scope, $modalInstance, shgaEvent, allGolfers) {
 	$scope.shgaEvent = shgaEvent;
 	$scope.allGolfers = allGolfers;
-	$scope.scheduledGolfers = angular.copy(shgaEvent.golfers);
+	$scope.scheduledGolfers = [];
 	$scope.availableGolfers = [];
 	$scope.availableGolfersSelected = [];
 	$scope.scheduledGolfersSelected = [];
 
+	if(shgaEvent.golfers != null && shgaEvent.golfers.length > 0) 
+	{
+		$scope.scheduledGolfers = angular.copy(shgaEvent.golfers);
+	}
+	
 	filterForEvent();
 
 	$scope.addGolfer = function(isAll) {

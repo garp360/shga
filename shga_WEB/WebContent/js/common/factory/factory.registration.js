@@ -6,7 +6,7 @@ angular.module('shgaApp.factory.Registration', []).factory('Registration', funct
 		return new Firebase("https://shga.firebaseio.com");
 	};
 
-	authService.createUser = function createUser(rootRef, userObj) {
+	factory.createUser = function createUser(rootRef, userObj) {
 		var deferred = $q.defer();
 		rootRef.createUser(userObj, function(err) {
 			if (!err) {
