@@ -1,4 +1,4 @@
-angular.module('shgaApp.factories', []).factory('shgaDataProvider', function($firebase, $q) {
+angular.module('shgaApp.factories', ['shgaApp.factory.Profile']).factory('shgaDataProvider', function($firebase, $q) {
 	var shgaDataService = {};
 
 	shgaDataService.getEventData = function getEventData() {
@@ -32,8 +32,7 @@ angular.module('shgaApp.factories', []).factory('shgaDataProvider', function($fi
 		}
 
 		return filteredList;
-	}
-	;
+	};
 
 	shgaDataService.updateProfile = function updateProfile(rootRef, golfer, shgaEvents) {
 		var authData = rootRef.getAuth();
@@ -161,14 +160,7 @@ angular.module('shgaApp.factories', []).factory('shgaDataProvider', function($fi
 	;
 
 	return shgaDataService;
-}).factory("Profile", [ "$firebase", function($firebase) {
-	return function(userId) {
-		console.log("Finding profile for User (userId=[" + userId + "]");
-		var ref = new Firebase("https://shga.firebaseio.com/golfers/").child(userId);
-
-		return $firebase(ref).$asObject().$loaded();
-	};
-} ]).factory('authProvider', function($firebase, $q) {
+}).factory('authProvider', function($firebase, $q) {
 	var authService = {};
 
 	authService.getAuthRef = function() {

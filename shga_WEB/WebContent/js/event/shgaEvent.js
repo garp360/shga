@@ -40,47 +40,46 @@ angular.module('shgaApp.Event', []).controller("EventController", ["$scope", "$f
 		return userInRole;
 	};
 
-	$scope.editProfile = function(userId) {
-		console.log('Requesting EditProfile userId=[' + userId + ']');
+	$scope.editProfile = function(userId) 
+	{
+		$log.info('Requesting EditProfile userId=[' + userId + ']');
 		
-		Profile(userId).then(function(userProfile) {
-			$scope.profile = userProfile;
-			console.log("loaded Profile", $scope.profile, $scope.profile.teebox.color);
-			console.log('Teebox : ' + $scope.profile.teebox.color);
-		
-		
-		
-		var modalInstance = $modal.open({
-		    templateUrl : 'partial/shga-golfer-form.html',
-		    controller : 'ProfileController',
-		    size : 'lg',
-		    backdrop : 'static',
-		    resolve : {
-		    	profile : function() {
-				    return $scope.profile;
+		Profile.findByUserId(userId).then(function(userProfile) 
+		{
+			$log.info('Loaded Profile! ', userProfile, userProfile.teebox.color);
+			var modalInstance = $modal.open(
+			{
+			    templateUrl : 'partial/shga-golfer-form.html',
+			    controller : 'ProfileController',
+			    size : 'lg',
+			    backdrop : 'static',
+			    resolve : 
+			    {
+			    	profile : function() 
+			    	{
+					    return userProfile;
+				    }
 			    }
-		    }
-		});
+			});
 
-		modalInstance.result.then(function(profile) {
-			var allEvents = $scope.shgaEvents;
-			shgaDataProvider.updateProfile(rootRef, {
-			    firstName : profile.firstName,
-			    lastName : profile.lastName,
-			    nickname : profile.nickname,
-			    uid : profile.uid,
-			    roles : profile.roles,
-			    email : profile.email,
-			    teebox : profile.teebox,
-			    hcp : profile.hcp,
-			    ghin : profile.ghin,
-			    pw : profile.pw
-			}, allEvents);
-		}, function() {
-			$log.info('Modal dismissed at: ' + new Date());
-		});
-		
-		
+			modalInstance.result.then(function(profile) 
+			{
+				var allEvents = $scope.shgaEvents;
+				Profile.update(rootRef, {
+				    firstName : profile.firstName,
+				    lastName : profile.lastName,
+				    nickname : profile.nickname,
+				    uid : profile.uid,
+				    roles : profile.roles,
+				    email : profile.email,
+				    teebox : profile.teebox,
+				    hcp : profile.hcp,
+				    ghin : profile.ghin,
+				    pw : profile.pw
+				}, allEvents);
+			}, function() {
+				$log.info('Modal dismissed at: ' + new Date());
+			});
 		});
 	};
 
