@@ -1,16 +1,16 @@
-angular.module('shgaApp.Event', []).controller("EventController", ["$scope", "$firebase", "$modal", "$log", "authProvider", "shgaDataProvider", "Profile", function($scope, $firebase, $modal, $log, authProvider, shgaDataProvider, Profile) {
+angular.module('shgaApp.Event', []).controller("EventController", ["$scope", "$firebase", "$modal", "$log", "Registration", "ShgaEvent", "Profile", "Golfer", function($scope, $firebase, $modal, $log, Registration, ShgaEvent, Profile, Golfer) {
 	var rootRef = new Firebase("https://shga.firebaseio.com");
 	$scope.user = {};
 	$scope.sec = {};
 	$scope.registrant = {};
 	$scope.shgaEvent = {};
-	$scope.shgaEvents = shgaDataProvider.getEventData();
-	$scope.shgaGolfers = shgaDataProvider.getGolferData();
+	$scope.shgaEvents = ShgaEvent.getAllEvents();
+	$scope.shgaGolfers = Golfer.getAllGolfers();
 
 	rootRef.onAuth(function globalOnAuth(authData) {
 		if (authData) {
 			$scope.isAuth = true;
-			$scope.user = shgaDataProvider.getGolferByUserId(authData.uid);
+			$scope.user = Golfer.getGolferByUserId(authData.uid);
 		} else {
 			$scope.isAuth = false;
 			$scope.user = {};
@@ -25,7 +25,7 @@ angular.module('shgaApp.Event', []).controller("EventController", ["$scope", "$f
 
 	$scope.login = function(isValid) {
 		if (isValid) {
-			authProvider.authWithPassword(rootRef, {
+			Registration.authWithPassword(rootRef, {
 			    email : $scope.sec.email,
 			    password : $scope.sec.password
 			});
@@ -93,13 +93,13 @@ angular.module('shgaApp.Event', []).controller("EventController", ["$scope", "$f
 		});
 
 		modalInstance.result.then(function(registrant) {
-			authProvider.createUser(rootRef, {
+			Registration.createUser(rootRef, {
 			    email : registrant.username,
 			    password : registrant.password1
 			}).then(function() {
 				$log.info('User Created Successfully');
 				$log.info('Logging in...');
-				authProvider.registerUser(rootRef, {
+				Registration.registerUser(rootRef, {
 				    email : registrant.username,
 				    password : registrant.password1
 				}, registrant);
@@ -118,7 +118,7 @@ angular.module('shgaApp.Event', []).controller("EventController", ["$scope", "$f
 	};
 
 	$scope.deleteEvent = function(shgaEvent) {
-		shgaDataProvider.deleteShgaEvent(rootRef, shgaEvent);
+		ShgaEvent.remove(rootRef, shgaEvent);
 	};
 
 	$scope.isSignedUp = function(shgaEvent, userId) {
@@ -153,8 +153,7 @@ angular.module('shgaApp.Event', []).controller("EventController", ["$scope", "$f
 		    teebox : user.teebox,
 		    email : user.email
 		});
-		shgaDataProvider.addGolfers(rootRef, shgaEvent, golfers);
-		// $scope.shgaEvents = shgaDataProvider.getEventData();
+		ShgaEvent.addGolfers(rootRef, shgaEvent, golfers);
 	};
 
 	$scope.dropOut = function(shgaEvent, userId) {
@@ -171,8 +170,7 @@ angular.module('shgaApp.Event', []).controller("EventController", ["$scope", "$f
 				});
 			}
 		});
-		shgaDataProvider.addGolfers(rootRef, shgaEvent, golfers);
-		// $scope.shgaEvents = shgaDataProvider.getEventData();
+		ShgaEvent.addGolfers(rootRef, shgaEvent, golfers);
 	};
 
 	$scope.createEvent = function(size) {
@@ -188,11 +186,10 @@ angular.module('shgaApp.Event', []).controller("EventController", ["$scope", "$f
 		    }
 		});
 
-		modalInstance.result.then(function(shgaEvent) {
-			// $log.info('shgaEvent: ' + shgaEvent);
-			shgaDataProvider.createShgaEvent(rootRef, shgaEvent);
+		modalInstance.result.then(function(shgaEvent) 
+		{
+			ShgaEvent.create(rootRef, shgaEvent);
 			$log.info('Event Created Successfully');
-			// $scope.shgaEvents = shgaDataProvider.getEventData();
 		}, function() {
 			$log.info('Modal dismissed at: ' + new Date());
 		});
@@ -229,7 +226,7 @@ angular.module('shgaApp.Event', []).controller("EventController", ["$scope", "$f
 			});
 
 			$log.info('Managed Golfers Successfully');
-			shgaDataProvider.addGolfers(rootRef, shgaEvent, golfers);
+			ShgaEvent.addGolfers(rootRef, shgaEvent, golfers);
 		}, function(err) {
 			$log.info('Managed Golfers Failed');
 		}, function() {
