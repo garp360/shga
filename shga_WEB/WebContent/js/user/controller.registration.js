@@ -1,4 +1,4 @@
-angular.module('shgaApp.User', []).controller('RegistrationController', function($scope, $modalInstance) {
+angular.module('shgaApp.controllers.Registration', []).controller('RegistrationController', function($scope, $modalInstance) {
 	$scope.title = "SHGA Registration";
 	$scope.teeboxes = [ 
        { color : 'Gold' }, 

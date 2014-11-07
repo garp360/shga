@@ -1,4 +1,4 @@
-angular.module('shgaApp.Golfer', []).controller('ProfileController', [ "$scope", "$modalInstance", "profile", function($scope, $modalInstance, profile) {
+angular.module('shgaApp.controllers.Profile', []).controller('ProfileController', [ "$scope", "$modalInstance", "profile", function($scope, $modalInstance, profile) {
 	$scope.profile = profile;
 	$scope.teeboxes = [ 
         { color : 'Gold' },

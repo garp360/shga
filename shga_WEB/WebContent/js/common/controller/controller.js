@@ -1,0 +1,1 @@
+angular.module('shgaApp.controllers', ['shgaApp.controllers.Event', 'shgaApp.controllers.Profile', 'shgaApp.controllers.Registration']);

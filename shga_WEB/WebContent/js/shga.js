@@ -1,4 +1,4 @@
-var app = angular.module('shgaApp', [ 'firebase', 'ui.bootstrap', 'shgaApp.factories', 'shgaApp.filters', 'shgaApp.Event', 'shgaApp.Golfer', 'shgaApp.User' ]);
+var app = angular.module('shgaApp', [ 'firebase', 'ui.bootstrap', 'shgaApp.factories', 'shgaApp.filters', 'shgaApp.controllers' ]);
 
 app.config(function(datepickerConfig, datepickerPopupConfig) {
 	datepickerConfig.showWeeks = false;
