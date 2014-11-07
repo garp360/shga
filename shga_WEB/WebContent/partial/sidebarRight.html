@@ -1,0 +1,37 @@
+<div class="scrollable">
+	<div class="scrollable-content">
+		<div class="list-group" ui-toggle="rightSidebar">
+
+		      <div class="list-group-item">
+				<div class="navbar-form navbar-right">
+                        <form class="form-inline" ng-show="!isAuth" role="register" name="loginForm" ng-submit="login(loginForm.$valid)" novalidate ng-class="{'has-error': loginForm.email.$invalid && loginForm.email.$dirty}">
+                            <!-- EMAIL -->
+                            <div class="form-group ">
+                                <div class="error-container help-block hb-error-container">
+                                    <small class="error hb-error" ng-show="loginForm.email.$invalid && loginForm.email.$error.required && loginForm.password.$dirty && loginForm.password.$invalid && loginForm.password.$error.required">Username/Password are required.</small>
+                                    <small class="error hb-error" ng-show="loginError.state">{{loginError.msg}}</small>
+                                    <small class="error hb-error" ng-show="loginForm.email.$dirty && loginForm.email.$invalid && loginForm.email.$error.email">Invalid email.</small>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <input placeholder="username" type="email" name="email" class="form-control" ng-model="sec.email" required />
+                            </div>
+                            <!-- PASSWORD -->
+                            <div class="form-group">
+                                <input placeholder="password" type="password" name="password" class="form-control" ng-model="sec.password" required>
+                            </div>
+                            <!-- SUBMIT BUTTON -->
+                            <button type="submit" class="btn btn-primary">Log In</button>
+                            <button type="button" class="btn btn-link" ng-click="register()">Register</button>
+                        </form>
+                        <form ng-show="isAuth" role="form" name="logoutForm" ng-submit="logout()" novalidate action="">
+                            <div class="form-group" style="padding-right:20px;">Logged in as {{user.firstName}} {{user.lastName}}</div>
+                            <button type="submit" class="btn btn-primary btn-xs">Logout</button>
+                            <button type="button" class="btn btn-primary btn-xs" ng-click="editProfile(user.uid)">Edit Profile</button>
+                        </form>
+                    </div>
+		      </div>
+
+		</div>
+	</div>
+</div>

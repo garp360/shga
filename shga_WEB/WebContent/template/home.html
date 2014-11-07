@@ -1,0 +1,55 @@
+<div class="scrollable">
+	<div class="scrollable-content">
+		<div class="list-group text-left" ng-repeat="shgaEvent in shgaEvents | currentEvents">
+			<div class="list-group-item list-group-item-home media">
+				<div>
+					<table class="table" style="width: 100%;">
+						<colgroup>
+							<col />
+							<col width="0" />
+							<col width="0" />
+							<col width="0" />
+						</colgroup>
+						<tr>
+							<td><h5 class="text-nowrap">
+									{{shgaEvent.group.name}} - {{shgaEvent.course.name}}<br />{{formatDate(shgaEvent.timestamp)}}
+								</h5></td>
+							<td ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
+								<button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" ng-click="deleteEvent(shgaEvent)">Delete</button>
+							</td>
+							<td ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
+								<button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" ng-click="manageGolfers(shgaEvent)">Add Golfers</button>
+							</td>
+							<td ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
+								<button ng-show="isAuth && !isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-success btn-xs" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
+								<button ng-show="isAuth && isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-danger btn-xs" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div>
+					<table class="table table-bordered table-hover" style="width: 100%;">
+						<colgroup>
+							<col width="0" />
+							<col />
+							<col width="0" />
+							<col width="0" />
+						</colgroup>
+						<tr ng-repeat="golfer in shgaEvent.golfers | orderBy:['lastName','firstName']">
+							<td><h4>
+									<span style="width: 50px;" ng-class="{'label label-sm pull-right hb-badge-black' : golfer.teebox.color == 'Black', 'label label-sm pull-right hb-badge-blue' : golfer.teebox.color == 'Blue'}">{{golfer.hcp}}</span>
+								</h4></td>
+							<td><h6 class="text-nowrap">{{golfer.firstName}} {{golfer.lastName}}</h6></td>
+							<td ng-show="isUserInRole('SHGA_ADMIN')">
+									<button type="button" class="btn btn-default btn-link" ng-click="dropOut(shgaEvent, golfer.uid)">Remove</button>
+								</td>
+							<td ng-show="isUserInRole('SHGA_ADMIN')">
+									<button type="button" class="btn btn-default btn-link" ng-click="editProfile(golfer.uid)">Edit Profile</button>
+								</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
