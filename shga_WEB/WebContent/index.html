@@ -45,12 +45,8 @@
 				</div>
 			</div>
 			<div class="btn-group pull-right" yield-to="navbarAction">
-				<div ng-show="!isAuth" ui-toggle="sidebarRight" class="btn">
-					<i class="fa fa-comment"></i> Login/Register
-				</div>
-				<div ng-show="isAuth" ui-toggle="sidebarRight" class="btn">
-					<i class="fa fa-comment"></i> {{user.firstName}} {{user.lastName}}
-				</div>
+				<a ng-show="!isAuth" class="btn btn-navbar" href="#/login">Sign In</a>
+				<a ng-show="isAuth" class="btn btn-navbar" ng-click="logout()">Logout</a>
 			</div>
 		</div>
 		<div class="navbar navbar-app navbar-absolute-bottom">

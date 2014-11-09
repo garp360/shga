@@ -58,10 +58,8 @@ angular.module('shgaApp.factory.Registration', []).factory('Registration', funct
 			} else if (authData) {
 				deferred.resolve(authData);
 			}
-			;
-
-			return deferred.promise;
 		});
+		return deferred.promise;
 	};
 
 	return factory;

@@ -1,0 +1,65 @@
+<div content-for="title">
+	<span>Event</span>
+</div>
+<div class="scrollable">
+	<div class="scrollable-content" ng-controller="ManageEventController">
+		<div class="list-group text-left hb-list-group">
+			<div class="list-group-item list-group-item-home media">
+				<div class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="inputGroup1" class="col-sm-3 control-label hb-control-label">Group</label>
+						<div class="col-sm-9" style="padding-top: 7px;">
+							<select id="inputGroup1" ng-model="shgaEvent.group" ng-options="golfGroup.name for golfGroup in golfGroups"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputEventDate1" class="col-sm-3 control-label hb-control-label">Event Date</label>
+						<div class="col-md-6">
+							<p class="input-group">
+								<input id="inputEventDate1" type="text" class="form-control" datepicker-popup="{{format}}" ng-model="shgaEvent.dt" is-open="opened" min-date="minDate" ng-required="true" close-text="Close" show-weeks="false" starting-day="7" /> <span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open($event)">
+										<i class="glyphicon glyphicon-calendar"></i>
+									</button>
+								</span>
+							</p>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inputCourseName1" class="col-sm-3 control-label hb-control-label">Course</label>
+						<div class="col-sm-9" style="padding-top: 7px;">
+							<select id="inputGroup1" ng-model="shgaEvent.course" ng-options="course.name for course in courses"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="row">
+							<label for="teetime" class="col-sm-3 control-label hb-control-label" style="margin-top: 2.75em;">Tee Time</label>
+							<div class="col-sm-4">
+								<timepicker ng-model="teeTime" hour-step="hstep" minute-step="mstep"></timepicker>
+							</div>
+							<div class="col-sm-5">
+								<button type="button" class="btn btn-success btn-sm pull-left" ng-click="addTeeTime()" style="margin-top: 3.20em;">Add</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div>
+					<label class="col-sm-3 control-label hb-control-label">Available Tee Times</label>
+					<div class="col-sm-6">{{formatTeeTimes()}}</div>
+				</div>
+				<table width="100%">
+					<colgroup>
+						<col />
+						<col width="0" />
+						<col width="0" />
+					</colgroup>
+					<tr>
+						<td></td>
+						<td><button type="submit" class="btn btn-sm btn-primary pull-right" ng-click="save()">Save</button></td>
+						<td style="padding-left: 6px;"><a type="button" class="btn btn-sm btn-default pull-right" href="#">Cancel</a></td>
+					</tr>
+				</table>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

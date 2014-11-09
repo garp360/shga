@@ -1,4 +1,5 @@
-angular.module('shgaApp.controllers.Registration', []).controller('RegistrationController', function($scope, $modalInstance) {
+angular.module('shgaApp.controllers.Registration', []).controller('RegistrationController', function($scope, $log, $location, Registration) {
+	var rootRef = new Firebase("https://shga.firebaseio.com");
 	$scope.title = "SHGA Registration";
 	$scope.teeboxes = [ 
        { color : 'Gold' }, 
@@ -12,13 +13,27 @@ angular.module('shgaApp.controllers.Registration', []).controller('RegistrationC
 	    hcp : 10.0,
 	    teebox : $scope.teeboxes[1]
 	};
-
-	$scope.ok = function() {
-		var sec = $scope.registrant;
-		$modalInstance.close(sec);
-	};
-
-	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
+	
+	$scope.register = function() {
+		$log.info('Begin register user...')
+		Registration.createUser(rootRef, {
+		    email : $scope.registrant.username,
+		    password : $scope.registrant.password1
+		}).then(function() {
+			$log.info('User Created Successfully');
+			$log.info('Logging in...');
+			Registration.registerUser(rootRef, {
+			    email : $scope.registrant.username,
+			    password : $scope.registrant.password1
+			}, $scope.registrant).then(function() {
+				$log.info('User Logged In');
+				$log.info('Switching routes...');
+				$location.path('/', false);
+			}, function(err) {
+				$log.info('Registration Error: ' + err);
+			});
+		}, function(err) {
+			$log.info('Registration Error: ' + err);
+		});
 	};
 });
