@@ -1,4 +1,9 @@
 
-hb-list-group {
+.hb-list-group {
 	margin-bottom:5px;	
+}
+
+.hb-multiselect-button {
+	margin:5px;
+	width: 50px;	
 }

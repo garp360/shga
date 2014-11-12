@@ -145,44 +145,45 @@ angular.module('shgaApp.controllers.Event', []).controller("EventController", [ 
 		ShgaEvent.addGolfers(rootRef, shgaEvent, golfers);
 	};
 
-	
-
 	$scope.manageGolfers = function(shgaEvent) {
-		var modalInstance = $modal.open({
-			templateUrl : 'partial/shga-event-golfers-form.html',
-			controller : 'ManageEventGolfersController',
-			backdrop : 'static',
-			size : 'lg',
-			resolve : {
-				shgaEvent : function() {
-					return shgaEvent;
-				},
-				allGolfers : function() {
-					return $scope.shgaGolfers;
-				}
-			}
-		});
-
-		modalInstance.result.then(function(scheduleGolfers) {
-			var golfers = [];
-
-			angular.forEach(scheduleGolfers, function(golfer) {
-				golfers.push({
-					uid : golfer.uid,
-					firstName : golfer.firstName,
-					lastName : golfer.lastName,
-					hcp : golfer.hcp,
-					teebox : golfer.teebox,
-					email : golfer.email
-				});
-			});
-
-			$log.info('Managed Golfers Successfully');
-			ShgaEvent.addGolfers(rootRef, shgaEvent, golfers);
-		}, function(err) {
-			$log.info('Managed Golfers Failed');
-		}, function() {
-			$log.info('Modal dismissed at: ' + new Date());
-		});
+		$location.path('/golfers/' + shgaEvent.eventId, false);
 	};
+	
+//	$scope.manageGolfers = function(shgaEvent) {
+//		var modalInstance = $modal.open({
+//			templateUrl : 'partial/shga-event-golfers-form.html',
+//			controller : 'ManageEventGolfersController',
+//			backdrop : 'static',
+//			size : 'lg',
+//			resolve : {
+//				shgaEvent : function() {
+//					return shgaEvent;
+//				},
+//				allGolfers : function() {
+//					return $scope.shgaGolfers;
+//				}
+//			}
+//		});
+//		modalInstance.result.then(function(scheduleGolfers) {
+//			var golfers = [];
+//
+//			angular.forEach(scheduleGolfers, function(golfer) {
+//				golfers.push({
+//					uid : golfer.uid,
+//					firstName : golfer.firstName,
+//					lastName : golfer.lastName,
+//					hcp : golfer.hcp,
+//					teebox : golfer.teebox,
+//					email : golfer.email
+//				});
+//			});
+//
+//			$log.info('Managed Golfers Successfully');
+//			ShgaEvent.addGolfers(rootRef, shgaEvent, golfers);
+//		}, function(err) {
+//			$log.info('Managed Golfers Failed');
+//		}, function() {
+//			$log.info('Modal dismissed at: ' + new Date());
+//		});
+//	};
 } ]);

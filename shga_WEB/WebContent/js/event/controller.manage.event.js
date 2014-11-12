@@ -1,4 +1,4 @@
-angular.module('shgaApp.controllers.Event').controller('ManageEventController', [ "$scope", "$location", "ShgaEvent", function($scope, $location, ShgaEvent) {
+angular.module('shgaApp.controllers.Event').controller('ManageEventController', [ "$scope", "$routeParams", "$location", "ShgaEvent", function($scope, $routeParams, $location, ShgaEvent) {
 	var rootRef = new Firebase("https://shga.firebaseio.com");
 	$scope.hstep = 1;
 	$scope.mstep = 1;

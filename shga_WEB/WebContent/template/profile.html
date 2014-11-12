@@ -4,7 +4,10 @@
 <div class="scrollable" ng-controller="ProfileController">
 	<div class="scrollable-content">
 		<div class="list-group text-left hb-list-group">
-			<div class="list-group-item list-group-item-home media">
+			<div ng-show="!isloaded" class="list-group-item list-group-item-home media">
+				<div>Loading...</div>
+			</div>
+			<div ng-show="isloaded"  class="list-group-item list-group-item-home media">
 				<form class="form-horizontal" role="form">
 					<div class="form-group">
 						<label for="firstName" class="col-sm-3 control-label hb-control-label">First Name</label>

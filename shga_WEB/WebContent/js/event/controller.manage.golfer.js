@@ -1,17 +1,29 @@
- angular.module('shgaApp.controllers.Event').controller('ManageEventGolfersController', [ "$scope", "$modalInstance", "shgaEvent", "allGolfers", function($scope, $modalInstance, shgaEvent, allGolfers) {
-	$scope.shgaEvent = shgaEvent;
-	$scope.allGolfers = allGolfers;
+ angular.module('shgaApp.controllers.Event').controller('ManageEventGolfersController', [ "$scope", "$routeParams", "$location", "$log", "ShgaEvent", "Golfer", function($scope, $routeParams, $location, $log, ShgaEvent, Golfer) {
+	 var rootRef = new Firebase("https://shga.firebaseio.com");
+	 var eventId = $routeParams.eventId;
+	$scope.shgaEvent = {};
+	$scope.allGolfers = [];
 	$scope.scheduledGolfers = [];
 	$scope.availableGolfers = [];
 	$scope.availableGolfersSelected = [];
 	$scope.scheduledGolfersSelected = [];
+	$scope.isloaded = false;
 
-	if(shgaEvent.golfers != null && shgaEvent.golfers.length > 0) 
-	{
-		$scope.scheduledGolfers = angular.copy(shgaEvent.golfers);
-	}
-	
-	filterForEvent();
+	ShgaEvent.getEventById(eventId).then(function(shgaEvent) {
+		$scope.shgaEvent = shgaEvent;
+		
+		if(shgaEvent.golfers != null && shgaEvent.golfers.length > 0) 
+		{
+			$scope.scheduledGolfers = angular.copy(shgaEvent.golfers);
+		}
+		
+		Golfer.getAllGolfers().then(function(allGolfers){
+			$scope.allGolfers = allGolfers;
+			
+			filterForEvent();
+			$scope.isloaded = true;
+		});
+	});
 
 	$scope.addGolfer = function(isAll) {
 		var scheduled = [];
@@ -66,8 +78,7 @@
 				$scope.availableGolfers.push(golfer);
 			}
 		});
-	}
-	;
+	};
 
 	function containsGolfer(golferId) {
 		var found = false;
@@ -79,12 +90,23 @@
 		}
 		return found;
 	}
+	
+	$scope.save = function() {
+		var golfers = [];
 
-	$scope.ok = function() {
-		$modalInstance.close($scope.scheduledGolfers);
-	};
-
-	$scope.cancel = function() {
-		$modalInstance.dismiss('cancel');
+		angular.forEach($scope.scheduledGolfers, function(golfer) {
+			golfers.push({
+				uid : golfer.uid,
+				firstName : golfer.firstName,
+				lastName : golfer.lastName,
+				hcp : golfer.hcp,
+				teebox : golfer.teebox,
+				email : golfer.email
+			});
+		});
+		
+		$log.info('Managed Golfers Successfully');
+		ShgaEvent.addGolfers(rootRef, $scope.shgaEvent, golfers);
+		$location.path('/', false);
 	};
 } ]);

@@ -7,7 +7,7 @@ angular.module('shgaApp.factory.Golfer', []).factory('Golfer', function($firebas
 		var sync = $firebase(ref);
 		var golfersArray = sync.$asArray();
 
-		return golfersArray;
+		return golfersArray.$loaded();
 	};
 
 	factory.getGolferByUserId = function getGolferByUserId(userId) {

@@ -3,6 +3,7 @@ angular.module('shgaApp.controllers.Profile', []).controller('ProfileController'
 	var userId = $routeParams.uid;
 	$scope.shgaEvents = ShgaEvent.getAllEvents();
 	$scope.profile = {};
+	$scope.isloaded = false;
 
 	$log.info('Requesting EditProfile userId=[' + userId + ']');
 
@@ -33,6 +34,7 @@ angular.module('shgaApp.controllers.Profile', []).controller('ProfileController'
 				$scope.profile.teebox = teebox;
 			}
 		});
+		$scope.isloaded = true;
 	});
 
 	$scope.save = function() {

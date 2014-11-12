@@ -2,6 +2,13 @@ angular.module('shgaApp.factory.Event', []).factory('ShgaEvent', function($fireb
 	
 	var factory = {};
 	
+	factory.getEventById = function getEventById(eventId) {
+		var eventRef = new Firebase("https://shga.firebaseio.com/events/").child(eventId);
+		var sync = $firebase(eventRef).$asObject();
+		
+		return sync.$loaded();
+	};
+
 	factory.getAllEvents = function getAllEvents() {
 		var ref = new Firebase("https://shga.firebaseio.com/events");
 		var sync = $firebase(ref.limit(10));

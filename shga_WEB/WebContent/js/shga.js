@@ -22,5 +22,8 @@ app.config(function($routeProvider) {
 	}).when('/event', {
 		templateUrl : 'template/event.html',
 		reloadOnSearch : false
+	}).when('/golfers/:eventId', {
+		templateUrl : 'template/golfers.html',
+		reloadOnSearch : false
 	});
 });
