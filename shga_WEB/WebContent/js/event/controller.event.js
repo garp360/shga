@@ -1,4 +1,4 @@
-angular.module('shgaApp.controllers.Event', []).controller("EventController", [ "$rootScope", "$scope", "$firebase", "$modal", "$log", "$location", "Registration", "ShgaEvent", "Profile", "Golfer", function($rootScope, $scope, $firebase, $modal, $log, $location, Registration, ShgaEvent, Profile, Golfer) {
+angular.module('shgaApp.controllers.Event', []).controller("EventController", [ "$rootScope", "$scope", "$firebase", "$log", "$location", "Registration", "ShgaEvent", "Profile", "Golfer", function($rootScope, $scope, $firebase, $log, $location, Registration, ShgaEvent, Profile, Golfer) {
 	var rootRef = new Firebase("https://shga.firebaseio.com");
 	$scope.user = {};
 	$scope.sec = {};
@@ -149,41 +149,4 @@ angular.module('shgaApp.controllers.Event', []).controller("EventController", [ 
 		$location.path('/golfers/' + shgaEvent.eventId, false);
 	};
 	
-//	$scope.manageGolfers = function(shgaEvent) {
-//		var modalInstance = $modal.open({
-//			templateUrl : 'partial/shga-event-golfers-form.html',
-//			controller : 'ManageEventGolfersController',
-//			backdrop : 'static',
-//			size : 'lg',
-//			resolve : {
-//				shgaEvent : function() {
-//					return shgaEvent;
-//				},
-//				allGolfers : function() {
-//					return $scope.shgaGolfers;
-//				}
-//			}
-//		});
-//		modalInstance.result.then(function(scheduleGolfers) {
-//			var golfers = [];
-//
-//			angular.forEach(scheduleGolfers, function(golfer) {
-//				golfers.push({
-//					uid : golfer.uid,
-//					firstName : golfer.firstName,
-//					lastName : golfer.lastName,
-//					hcp : golfer.hcp,
-//					teebox : golfer.teebox,
-//					email : golfer.email
-//				});
-//			});
-//
-//			$log.info('Managed Golfers Successfully');
-//			ShgaEvent.addGolfers(rootRef, shgaEvent, golfers);
-//		}, function(err) {
-//			$log.info('Managed Golfers Failed');
-//		}, function() {
-//			$log.info('Modal dismissed at: ' + new Date());
-//		});
-//	};
 } ]);
