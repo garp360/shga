@@ -2,7 +2,7 @@
   <h1 class="scrollable-header app-name">SHGA <small>1.0</small></h1>  
   <div class="scrollable-content">
     <div class="list-group" ui-turn-off='sidebarLeft'>
-      <a class="list-group-item" href="#">Home <i class="fa fa-chevron-right pull-right"></i></a>
+      <a class="list-group-item" href="#/">Home <i class="fa fa-chevron-right pull-right"></i></a>
       <a ng-show="isAuth" class="list-group-item" href="#/profile/{{user.uid}}">Profile <i class="fa fa-chevron-right pull-right"></i></a>
       <a ng-show="isAuth && isUserInRole('SHGA_ADMIN')" class="list-group-item" href="#/event">Create Event <i class="fa fa-chevron-right pull-right"></i></a>
     </div>

@@ -1,4 +1,6 @@
-var app = angular.module('shgaApp', [ 'firebase', 'ui.bootstrap', 'ngRoute', 'ngTouch', 'mobile-angular-ui', 'shgaApp.factories', 'shgaApp.filters', 'shgaApp.controllers' ]);
+var app = angular.module('shgaApp', [ 'firebase', 'ui.bootstrap', 'ngRoute', 'ngTouch', 
+                                      'mobile-angular-ui', 'shgaApp.factories', 'shgaApp.filters', 
+                                      'shgaApp.controllers', 'shgaApp.directives' ]);
 
 app.config(function(datepickerConfig, datepickerPopupConfig) {
 	datepickerConfig.showWeeks = false;
@@ -9,7 +11,7 @@ app.config(function(datepickerConfig, datepickerPopupConfig) {
 app.config(function($routeProvider) {
 	$routeProvider.when('/', {
 		templateUrl : 'template/home.html',
-		reloadOnSearch : false
+		reloadOnSearch : true
 	}).when('/login', {
 		templateUrl : 'template/login.html',
 		reloadOnSearch : false
@@ -22,8 +24,12 @@ app.config(function($routeProvider) {
 	}).when('/event', {
 		templateUrl : 'template/event.html',
 		reloadOnSearch : false
+	}).when('/outing/:eventId', {
+		templateUrl : 'template/outing.html',
+		controller : 'OutingController',
+		reloadOnSearch : false
 	}).when('/golfers/:eventId', {
 		templateUrl : 'template/golfers.html',
 		reloadOnSearch : false
-	});
+	}).otherwise({redirectTo: '/'});
 });

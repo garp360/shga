@@ -1,0 +1,52 @@
+<div class="scrollable">
+	<div class="scrollable-content">
+		<accordion>
+   			<accordion-group ng-repeat="shgaEvent in shgaEvents | currentEvents">
+    			<accordion-heading>
+			    	<h4 class="text-nowrap" style="text-decoration:none !important;">{{shgaEvent.group.name}}<small style="padding-left:1em;text-decoration:none !important;">{{formatDate(shgaEvent.timestamp)}}</small></h4>
+		    	</accordion-heading>
+		    	<table style="width: 100%;">
+					<colgroup>
+						<col />
+						<col width="0" />
+						<col width="0" />
+						<col width="0" />
+					</colgroup>
+					<tr>
+						<td><h5 class="text-nowrap">{{shgaEvent.course.name}}<br /><small>Tee Times: {{formatTeeTimes(shgaEvent.teeTimes)}}</small></h5></td>
+						<td ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
+							<button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" ng-click="deleteEvent(shgaEvent)">Delete</button>
+						</td>
+						<td style="padding-left:3px;" ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
+							<button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" ng-click="manageGolfers(shgaEvent)">Add Golfers</button>
+						</td>
+						<td style="padding-left:3px;" ng-show="isAuth">
+							<button ng-show="isAuth && !isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-success btn-xs" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
+							<button ng-show="isAuth && isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-danger btn-xs" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
+						</td>
+					</tr>
+				</table>
+      			<table class="table table-bordered table-hover" style="width: 100%;">
+					<colgroup>
+						<col width="0" />
+						<col width="100%"/>
+						<col width="0" />
+						<col width="0" />
+					</colgroup>
+					<tr ng-repeat="golfer in shgaEvent.golfers | orderBy:['lastName','firstName']">
+						<td><h4>
+								<span style="width: 50px;" ng-class="{'label label-sm pull-right hb-badge-black' : golfer.teebox.color == 'Black', 'label label-sm pull-right hb-badge-blue' : golfer.teebox.color == 'Blue'}">{{golfer.hcp}}</span>
+							</h4></td>
+						<td><h5 class="text-nowrap">{{golfer.firstName}} {{golfer.lastName}}</h5></td>
+						<td ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
+							<button type="button" class="btn btn-default btn-sm btn-link" ng-click="dropOut(shgaEvent, golfer.uid)">Remove</button>
+						</td>
+						<td ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
+							<a type="button" class="btn btn-default btn-sm btn-link" href="#/profile/{{golfer.uid}}">Edit Profile</a>
+						</td>
+					</tr>
+				</table>
+    		</accordion-group>
+  		</accordion>
+	</div>
+</div>
