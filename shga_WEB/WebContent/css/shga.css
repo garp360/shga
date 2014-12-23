@@ -19,6 +19,33 @@
     color: #b40404;
 }
 
+.validation-error-messages SPAN {
+	color: #b40404;
+	font-size: .875em;
+	padding-left:4px;
+}
+
+.hb-list-group {
+	margin-bottom:1px;	
+}
+
+.btn-success.adjust {
+	color:#f3f3f3;
+	background-color: #076800;
+	width:80px;
+	border-color: #014504;
+}
+
+.btn-danger.adjust {
+	color:#f3f3f3;
+	background-color: #9E0C01;
+	width:80px;
+	border-color: #8A0C01;
+}
+
+.scrollable.adjust {
+	background-color: #FFFFFF;
+}
 
 .hb-navbar-black.navbar-default {
     background-color: #1d1d1d;

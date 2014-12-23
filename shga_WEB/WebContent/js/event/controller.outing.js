@@ -1,20 +1,19 @@
-angular.module('shgaApp.controllers.Event', []).controller("EventController", [ "$rootScope", "$scope", "$firebase", "$log", "$location", "Registration", "ShgaEvent", "Profile", "Golfer", function($rootScope, $scope, $firebase, $log, $location, Registration, ShgaEvent, Profile, Golfer) {
+ angular.module('shgaApp.controllers.Event').controller('OutingController', [ "$routeParams","$rootScope", "$scope", "$firebase", "$log", "$location", "Registration", "ShgaEvent", "Profile", "Golfer", function($routeParams, $rootScope, $scope, $firebase, $log, $location, Registration, ShgaEvent, Profile, Golfer) {
 	var rootRef = new Firebase("https://shga.firebaseio.com");
-	$scope.alert = true;
-	$scope.user = {};
-	$scope.sec = {};
-	$scope.registrant = {};
+	var eventId = $routeParams.eventId;
+	$scope.isloaded = false;
 	$scope.shgaEvent = {};
-	$scope.shgaEvents = ShgaEvent.getAllEvents();
-	$scope.shgaGolfers = Golfer.getAllGolfers();
 	$scope.isAuth = false;
-
-	$rootScope.$on("$routeChangeStart", function() {
-		$rootScope.loading = true;
-	});
-
-	$rootScope.$on("$routeChangeSuccess", function() {
-		$rootScope.loading = false;
+	
+	ShgaEvent.getEventById(eventId).then(function(shgaEvent) {
+		$scope.shgaEvent = shgaEvent;
+		var authData = rootRef.getAuth();
+		if (authData) {
+			$scope.isAuth = true;
+		} else {
+			$scope.isAuth = false;
+		}
+		$scope.isloaded = true;
 	});
 
 	var date_sort_asc = function(date1, date2) {
@@ -25,36 +24,8 @@ angular.module('shgaApp.controllers.Event', []).controller("EventController", [ 
 		return 0;
 	};
 
-	rootRef.onAuth(function globalOnAuth(authData) {
-		if (authData) {
-			$scope.isAuth = true;
-			$scope.user = Golfer.getGolferByUserId(authData.uid);
-		} else {
-			$scope.isAuth = false;
-			$scope.user = {};
-		}
-	});
 
-	$scope.logout = function() {
-		rootRef.unauth();
-		$scope.sec = {};
-		$scope.user = {};
-		$location.path('/', false);
-	};
-
-	$scope.login = function() {
-		Registration.authWithPassword(rootRef, {
-			email : $scope.sec.email,
-			password : $scope.sec.password
-		}).then(function(result) {
-			$location.path('/', false);
-		});
-	};
 	
-	$scope.closeAlert = function() {
-	    $scope.alert = false;
-	};
-
 	$scope.isUserInRole = function(role) {
 		var userInRole = false;
 		if ($scope.user.roles != null && $scope.user.roles.length > 1) {
@@ -84,8 +55,6 @@ angular.module('shgaApp.controllers.Event', []).controller("EventController", [ 
 
 		return teeTimesFormatted;
 	};
-
-	
 
 	$scope.formatDate = function(timestamp) {
 		var mDate = moment(timestamp).format("ddd, MMM Do YYYY");

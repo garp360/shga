@@ -1,52 +1,21 @@
-<div class="scrollable">
-	<div class="scrollable-content">
-		<accordion>
-   			<accordion-group ng-repeat="shgaEvent in shgaEvents | currentEvents">
-    			<accordion-heading>
-			    	<h4 class="text-nowrap" style="text-decoration:none !important;">{{shgaEvent.group.name}}<small style="padding-left:1em;text-decoration:none !important;">{{formatDate(shgaEvent.timestamp)}}</small></h4>
-		    	</accordion-heading>
-		    	<table style="width: 100%;">
-					<colgroup>
-						<col />
-						<col width="0" />
-						<col width="0" />
-						<col width="0" />
-					</colgroup>
-					<tr>
-						<td><h5 class="text-nowrap">{{shgaEvent.course.name}}<br /><small>Tee Times: {{formatTeeTimes(shgaEvent.teeTimes)}}</small></h5></td>
-						<td ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
-							<button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" ng-click="deleteEvent(shgaEvent)">Delete</button>
-						</td>
-						<td style="padding-left:3px;" ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
-							<button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" ng-click="manageGolfers(shgaEvent)">Add Golfers</button>
-						</td>
-						<td style="padding-left:3px;" ng-show="isAuth">
-							<button ng-show="isAuth && !isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-success btn-xs" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
-							<button ng-show="isAuth && isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-danger btn-xs" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
-						</td>
-					</tr>
-				</table>
-      			<table class="table table-bordered table-hover" style="width: 100%;">
-					<colgroup>
-						<col width="55" />
-						<col />
-						<col width="0" />
-						<col width="0" />
-					</colgroup>
-					<tr ng-repeat="golfer in shgaEvent.golfers | orderBy:['lastName','firstName']">
-						<td><h4>
-								<span style="width: 50px;" ng-class="{'label label-sm pull-right hb-badge-black' : golfer.teebox.color == 'Black', 'label label-sm pull-right hb-badge-blue' : golfer.teebox.color == 'Blue'}">{{golfer.hcp}}</span>
-							</h4></td>
-						<td><h5 class="text-nowrap">{{golfer.firstName}} {{golfer.lastName}}</h5></td>
-						<td ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
-							<button type="button" class="btn btn-default btn-sm btn-link" ng-click="dropOut(shgaEvent, golfer.uid)">Remove</button>
-						</td>
-						<td ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
-							<a type="button" class="btn btn-default btn-sm btn-link" href="#/profile/{{golfer.uid}}">Edit Profile</a>
-						</td>
-					</tr>
-				</table>
-    		</accordion-group>
-  		</accordion>
-	</div>
+<!-- <div class="scrollable"> -->
+<!-- 	<div class="scrollable-content"> -->
+<!-- 		<div class="list-group" ng-repeat="shgaEvent in shgaEvents | currentEvents"> -->
+<!-- 			<a class="list-group-item text-nowrap" style="text-decoration:none !important;" href="#/">{{shgaEvent.group.name}} {{formatDate(shgaEvent.timestamp)}}</a> -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- </div> -->
+
+<div class="scrollable adjust">
+  <div class="scrollable-content">
+    <div class="list-group">
+	    <div ng-repeat="shgaEvent in shgaEvents | currentEvents" style="padding-right:3px;">
+	      <div class="list-group-item" href="#/outing/{{shgaEvent.eventId}}" style="font-size:.9em;">
+	      	<span style="font-size:1.2em;">{{shgaEvent.group.name}}</span><a href="#/outing/{{shgaEvent.eventId}}" style="font-size:1.2em;">{{formatDate(shgaEvent.timestamp)}}</a> ({{shgaEvent.golfers.length}} confirmed) 
+			<button ng-show="isAuth && !isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-success adjust btn-xs pull-right" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
+			<button ng-show="isAuth && isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-danger adjust btn-xs pull-right" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
+	      </div>
+	    </div>
+    </div>
+  </div>
 </div>
