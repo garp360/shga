@@ -119,14 +119,6 @@
 		ShgaEvent.addGolfers(rootRef, shgaEvent, golfers);
 	};
 
-	$scope.cancel = function() {
-		$location.path('/', false);
-	};
-	
-	$scope.editProfile = function(shgaEvent, userId) {
-		$location.path('/profile/' + userId + '/' + shgaEvent.eventId, false);
-	};
-
 	$scope.manageGolfers = function(shgaEvent) {
 		$location.path('/golfers/' + shgaEvent.eventId, false);
 	};

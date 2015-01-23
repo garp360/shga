@@ -11,7 +11,7 @@ app.config(function(datepickerConfig, datepickerPopupConfig) {
 app.config(function($routeProvider) {
 	$routeProvider.when('/', {
 		templateUrl : 'template/home.html',
-		reloadOnSearch : false
+		reloadOnSearch : true
 	}).when('/login', {
 		templateUrl : 'template/login.html',
 		reloadOnSearch : false
@@ -26,6 +26,10 @@ app.config(function($routeProvider) {
 		reloadOnSearch : false
 	}).when('/event', {
 		templateUrl : 'template/event.html',
+		reloadOnSearch : false
+	}).when('/outing/:eventId', {
+		templateUrl : 'template/outing.html',
+		controller : 'OutingController',
 		reloadOnSearch : false
 	}).when('/outing/:eventId', {
 		templateUrl : 'template/outing.html',
