@@ -15,15 +15,15 @@
 			</table>
      		<table class="table table-bordered table-hover" style="width: 100%;">
 				<tr ng-repeat="golfer in shgaEvent.golfers | orderBy:['lastName','firstName']">
-					<td style="text-align:center;vertical-align:middle; width:50px"><h4>
+					<td style="width: 44px;" valign="middle"><h4>
 							<span style="width: 40px;" ng-class="{'label label-sm pull-right hb-badge-black' : golfer.teebox.color == 'Black', 'label label-sm pull-right hb-badge-blue' : golfer.teebox.color == 'Blue'}">{{golfer.hcp}}</span>
 						</h4></td>
-					<td style="text-align:left;vertical-align:middle;">{{golfer.firstName}} {{golfer.lastName}}</td>
-					<td style="text-align:center;vertical-align:middle; width:70px" ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
-						<button type="button" class="btn btn-default btn-sm btn-link" style="width:60px" ng-click="dropOut(shgaEvent, golfer.uid)">Remove</button>
+					<td valign="middle">{{golfer.firstName}} {{golfer.lastName}}</td>
+					<td style="width: 70px;" valign="middle" ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
+						<button type="button" class="btn btn-default btn-sm btn-link" ng-click="dropOut(shgaEvent, golfer.uid)">Remove</button>
 					</td>
-					<td style="text-align:center;vertical-align:middle; width:70px" valign="middle" ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
-						<button type="button" class="btn btn-default btn-sm btn-link" style="width:60px" ng-click="editProfile(shgaEvent, golfer.uid)">Edit</button>
+					<td style="width: 70px;"valign="middle" ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
+						<a type="button" class="btn btn-default btn-sm btn-link" href="#/profile/{{golfer.uid}}">Edit</a>
 					</td>
 				</tr>
 			</table>
