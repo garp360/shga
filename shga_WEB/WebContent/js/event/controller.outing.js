@@ -63,6 +63,7 @@
 	};
 
 	$scope.deleteEvent = function(shgaEvent) {
+		$location.path('/', false);
 		ShgaEvent.remove(rootRef, shgaEvent);
 	};
 
@@ -118,6 +119,10 @@
 		ShgaEvent.addGolfers(rootRef, shgaEvent, golfers);
 	};
 
+	$scope.cancel = function() {
+		$location.path('/', false);
+	};
+	
 	$scope.manageGolfers = function(shgaEvent) {
 		$location.path('/golfers/' + shgaEvent.eventId, false);
 	};

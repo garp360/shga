@@ -1,19 +1,11 @@
-<!-- <div class="scrollable"> -->
-<!-- 	<div class="scrollable-content"> -->
-<!-- 		<div class="list-group" ng-repeat="shgaEvent in shgaEvents | currentEvents"> -->
-<!-- 			<a class="list-group-item text-nowrap" style="text-decoration:none !important;" href="#/">{{shgaEvent.group.name}} {{formatDate(shgaEvent.timestamp)}}</a> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-<!-- </div> -->
-
 <div class="scrollable adjust">
   <div class="scrollable-content">
     <div class="list-group">
 	    <div ng-repeat="shgaEvent in shgaEvents | currentEvents" style="padding-right:3px;">
 	      <div class="list-group-item" href="#/outing/{{shgaEvent.eventId}}" style="font-size:.9em;">
-	      	<span style="font-size:1.2em;">{{shgaEvent.group.name}}</span><a href="#/outing/{{shgaEvent.eventId}}" style="font-size:1.2em;">{{formatDate(shgaEvent.timestamp)}}</a> ({{shgaEvent.golfers.length}} confirmed) 
-			<button ng-show="isAuth && !isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-success adjust btn-xs pull-right" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
-			<button ng-show="isAuth && isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-danger adjust btn-xs pull-right" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
+	      	<div style="white-space:nowrap;font-size:1.2em;margin-right:6px;display:block;">{{shgaEvent.group.name}}</div><a href="#/outing/{{shgaEvent.eventId}}" style="margin-right:6px;display:block;white-space:nowrap;">{{formatDate(shgaEvent.timestamp)}}</a><div style="white-space:nowrap;position:absolute;bottom:8px;right:7px;">({{shgaEvent.golfers.length}} confirmed)</div>
+			<button ng-show="isAuth && !isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-success adjust btn-xs" style="position:absolute;top:8px;right:5px;" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
+			<button ng-show="isAuth && isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-danger adjust btn-xs" style="position:absolute;top:8px;right:5px;" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
 	      </div>
 	    </div>
     </div>

@@ -8,44 +8,41 @@
 	    	<table style="width: 100%;">
 				<colgroup>
 					<col width="100%" />
-					<col width="0" />
-					<col width="0" />
-					<col width="0" />
 				</colgroup>
 				<tr>
 					<td><h5 class="text-nowrap">{{shgaEvent.course.name}}<br /><small>Tee Times: {{formatTeeTimes(shgaEvent.teeTimes)}}</small></h5></td>
-					<td ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
-						<button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" ng-click="deleteEvent(shgaEvent)">Delete</button>
-					</td>
-					<td style="padding-left:3px;" ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
-						<button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" ng-click="manageGolfers(shgaEvent)">Add Golfers</button>
-					</td>
-					<td style="padding-left:3px;" ng-show="isAuth">
-						<button ng-show="isAuth && !isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-success adjust btn-xs" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
-						<button ng-show="isAuth && isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-danger adjust btn-xs" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
-					</td>
 				</tr>
 			</table>
      		<table class="table table-bordered table-hover" style="width: 100%;">
-				<colgroup>
-					<col width="0" />
-					<col width="100%" />
-					<col width="0" />
-					<col width="0" />
-				</colgroup>
 				<tr ng-repeat="golfer in shgaEvent.golfers | orderBy:['lastName','firstName']">
-					<td><h4>
-							<span style="width: 50px;" ng-class="{'label label-sm pull-right hb-badge-black' : golfer.teebox.color == 'Black', 'label label-sm pull-right hb-badge-blue' : golfer.teebox.color == 'Blue'}">{{golfer.hcp}}</span>
+					<td style="width: 44px;" valign="middle"><h4>
+							<span style="width: 40px;" ng-class="{'label label-sm pull-right hb-badge-black' : golfer.teebox.color == 'Black', 'label label-sm pull-right hb-badge-blue' : golfer.teebox.color == 'Blue'}">{{golfer.hcp}}</span>
 						</h4></td>
-					<td><h5 class="text-nowrap">{{golfer.firstName}} {{golfer.lastName}}</h5></td>
-					<td ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
+					<td valign="middle">{{golfer.firstName}} {{golfer.lastName}}</td>
+					<td style="width: 70px;" valign="middle" ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
 						<button type="button" class="btn btn-default btn-sm btn-link" ng-click="dropOut(shgaEvent, golfer.uid)">Remove</button>
 					</td>
-					<td ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
-						<a type="button" class="btn btn-default btn-sm btn-link" href="#/profile/{{golfer.uid}}">Edit Profile</a>
+					<td style="width: 70px;"valign="middle" ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
+						<a type="button" class="btn btn-default btn-sm btn-link" href="#/profile/{{golfer.uid}}">Edit</a>
 					</td>
 				</tr>
 			</table>
+			<div class="scrollable-footer" style="background-color: #fff;padding: 10px 20px 5px 20px;border-top: 1px solid #cccccc;" ng-show="isloaded">
+				<table style="width: 100%;">
+					<colgroup>
+						<col width="100%" />
+					</colgroup>
+					<tr>
+						<td style="text-align:center;">
+							<button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" style="margin:0px 2px;" ng-click="deleteEvent(shgaEvent)">Delete</button>
+							<button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" style="margin:0px 2px;" ng-click="manageGolfers(shgaEvent)">Add Golfers</button>
+							<button ng-show="isAuth && !isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-success adjust btn-xs" style="margin:0px 2px;" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
+							<button ng-show="isAuth && isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-danger adjust btn-xs" style="margin:0px 2px;" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
+							<button type="button" class="btn btn-default btn-xs" style="margin:0px 2px;" ng-click="cancel()">Ok</button>
+						</td>
+					</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

@@ -1,66 +1,68 @@
 <div content-for="title">
 	<span>Manage Golfers</span>
 </div>
-<div class="scrollable" ng-controller="ManageEventGolfersController">
+<div class="scrollable adjust" ng-controller="ManageEventGolfersController">
 	<div class="scrollable-content">
 		<div class="list-group hb-list-group">
 			<div ng-show="!isloaded" class="list-group-item list-group-item-home media">
 				<div>Loading...</div>
 			</div>
-			<div ng-show="isloaded" class="list-group-item list-group-item-home media">
-				<div class="form-horizontal" role="form">
-
+			<div ng-show="isloaded" style="margin:0px 20px;">
+				<form class="form" role="form" name="addGolfersForm">
 					<div class="form-group">
-						<label for="inputGroup1" class="col-sm-3 control-label hb-control-label">Event</label>
-						<p class="form-control-static">{{shgaEvent.group.name}}</p>
+						<label for="groupName">Event<br /><span style="font-weight: normal;">{{shgaEvent.group.name}}</span></label>
 					</div>
 					<div class="form-group">
-						<label for="inputGroup1" class="col-sm-3 control-label hb-control-label">Date</label>
-						<p class="form-control-static">{{formatDate(shgaEvent.timestamp)}}</p>
+						<label for="eventDate">Date<br /><span style="font-weight: normal;">{{formatDate(shgaEvent.timestamp)}}</span></label>
 					</div>
 					<div class="form-group">
-						<label for="inputGroup1" class="col-sm-3 control-label hb-control-label">Course</label>
-						<p class="form-control-static">{{shgaEvent.course.name}}</p>
+						<label for="course">Course<br /><span style="font-weight: normal;">{{shgaEvent.course.name}}</span></label>
 					</div>
-				</div>
-				<table>
-					<colgroup>
-						<col />
-						<col width="0" />
-						<col />
-					</colgroup>
-					<tr>
-						<td><select ng-model="availableGolfersSelected" id="selectGroup1" multiple size="10" style="width: 220px; height: 10em" ng-options="availableGolfer as availableGolfer.firstName + ' ' + availableGolfer.lastName  for availableGolfer in availableGolfers | orderBy:['lastName','firstName']"></select></td>
-						<td style="padding:5px;">
-							<button type="button" class="btn btn-primary btn-xs hb-multiselect-button" ng-click="addGolfer(true)">
-								<span class="fa fa-chevron-right"></span><span class="fa fa-chevron-right"></span>
-							</button>
-							<button type="button" class="btn btn-primary btn-xs hb-multiselect-button" ng-click="addGolfer(false)">
-								<span class="fa fa-chevron-right"></span>
-							</button>
-							<button type="button" class="btn btn-primary btn-xs hb-multiselect-button" ng-click="removeGolfer(false)">
-								<span class="fa fa-chevron-left"></span>
-							</button>
-							<button type="button" class="btn btn-primary btn-xs hb-multiselect-button" ng-click="removeGolfer(true)">
-								<span class="fa fa-chevron-left"></span><span class="fa fa-chevron-left"></span>
-							</button>
-						</td>
-						<td><select ng-model="scheduledGolfersSelected" id="selectGroup2" multiple size="10" style="width: 220px; height: 10em" ng-options="scheduledGolfer as scheduledGolfer.firstName + ' ' + scheduledGolfer.lastName  for scheduledGolfer in scheduledGolfers | orderBy:['lastName','firstName']"></select></td>
-					</tr>
-				</table>
-				<table width="100%">
-					<colgroup>
-						<col />
-						<col width="0" />
-						<col width="0" />
-					</colgroup>
-					<tr>
-						<td></td>
-						<td><button type="submit" class="btn btn-sm btn-primary pull-right" ng-click="save()">Save</button></td>
-						<td style="padding-left: 6px;"><a type="button" class="btn btn-sm btn-default pull-right" href="#">Cancel</a></td>
-					</tr>
-				</table>
+					<div class="row">
+						<div class="col-xs-12 col-sm-5"><select ng-model="availableGolfersSelected" id="selectGroup1" multiple size="10" style="width: 100%; height: 10em" ng-options="availableGolfer as availableGolfer.firstName + ' ' + availableGolfer.lastName  for availableGolfer in availableGolfers | orderBy:['lastName','firstName']"></select></div>
+						<div class="col-xs-12 col-sm-2">
+							<div class="row">
+								<div class="col-xs-2 col-sm-12"></div>
+								<div class="col-xs-2 col-sm-12">
+									<button type="button" class="btn btn-primary btn-xs hb-multiselect-button" ng-click="addGolfer(true)">
+										<span class="fa fa-chevron-right"></span><span class="fa fa-chevron-right"></span>
+									</button>
+								</div>
+								<div class="col-xs-2 col-sm-12">
+									<button type="button" class="btn btn-primary btn-xs hb-multiselect-button" ng-click="addGolfer(false)">
+										<span class="fa fa-chevron-right"></span>
+									</button>
+								</div>
+								<div class="col-xs-2 col-sm-12">
+									<button type="button" class="btn btn-primary btn-xs hb-multiselect-button" ng-click="removeGolfer(false)">
+										<span class="fa fa-chevron-left"></span>
+									</button>
+								</div>
+								<div class="col-xs-2 col-sm-12">
+									<button type="button" class="btn btn-primary btn-xs hb-multiselect-button" ng-click="removeGolfer(true)">
+										<span class="fa fa-chevron-left"></span><span class="fa fa-chevron-left"></span>
+									</button>
+								</div>
+								<div class="col-xs-2 col-sm-12"></div>
+							</div>						
+						</div>
+						<div class="col-xs-12 col-sm-5"><select ng-model="scheduledGolfersSelected" id="selectGroup2" multiple size="10" style="width: 100%; height: 10em" ng-options="scheduledGolfer as scheduledGolfer.firstName + ' ' + scheduledGolfer.lastName  for scheduledGolfer in scheduledGolfers | orderBy:['lastName','firstName']"></select></div>
+					</div>
+				</form>
 			</div>
+		</div>
+		<div class="scrollable-footer" style="background-color: #fff;padding: 10px 20px 5px 20px;border-top: 1px solid #cccccc;" ng-show="isloaded">
+			<table style="width: 100%;">
+				<colgroup>
+					<col width="100%" />
+				</colgroup>
+				<tr>
+					<td style="text-align:center;">
+						<button type="submit" class="btn btn-xs btn-default" style="margin:0px 2px;" ng-click="cancel()">Cancel</button>
+						<button type="submit" class="btn btn-xs btn-primary" style="margin:0px 2px;" ng-click="save()">Save</button>
+					</td>
+				</tr>
+			</table>
 		</div>
 	</div>
 </div>

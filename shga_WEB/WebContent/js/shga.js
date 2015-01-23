@@ -21,8 +21,15 @@ app.config(function($routeProvider) {
 	}).when('/profile/:uid', {
 		templateUrl : 'template/profile.html',
 		reloadOnSearch : false
+	}).when('/profile/:uid/:eventId', {
+		templateUrl : 'template/profile.html',
+		reloadOnSearch : false
 	}).when('/event', {
 		templateUrl : 'template/event.html',
+		reloadOnSearch : false
+	}).when('/outing/:eventId', {
+		templateUrl : 'template/outing.html',
+		controller : 'OutingController',
 		reloadOnSearch : false
 	}).when('/outing/:eventId', {
 		templateUrl : 'template/outing.html',

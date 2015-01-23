@@ -1,6 +1,7 @@
 angular.module('shgaApp.controllers.Profile', []).controller('ProfileController', [ "$scope", "$log", "$routeParams", "$location", "Profile", "ShgaEvent", function($scope, $log, $routeParams, $location, Profile, ShgaEvent) {
 	var rootRef = new Firebase("https://shga.firebaseio.com");
 	var userId = $routeParams.uid;
+	var eventId = $routeParams.eventId;
 	$scope.shgaEvents = ShgaEvent.getAllEvents();
 	$scope.profile = {};
 	$scope.isloaded = false;
@@ -37,6 +38,10 @@ angular.module('shgaApp.controllers.Profile', []).controller('ProfileController'
 		$scope.isloaded = true;
 	});
 
+	$scope.cancel = function() {
+		
+	};
+	
 	$scope.save = function() {
 		$log.info('Requesting update to profile...');
 		var profile = _getProfile($scope.profile);
@@ -44,6 +49,10 @@ angular.module('shgaApp.controllers.Profile', []).controller('ProfileController'
 		Profile.update(rootRef, profile, allEvents);
 	};
 
+	$scope.cancel = function() {
+		__back();
+	};
+	
 	function _getProfile(userProfile) {
 		$log.info('Building profile json! ' + $scope.profile.firstName);
 		var profile = {
@@ -60,5 +69,13 @@ angular.module('shgaApp.controllers.Profile', []).controller('ProfileController'
 		};
 
 		return profile;
+	}
+	
+	function __back() {
+		if(eventId) {
+			$location.path('/outing/' + eventId, false);
+		} else {
+			$location.path('/', false);
+		}
 	}
 } ]);
