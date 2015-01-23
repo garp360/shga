@@ -24,19 +24,17 @@
 			</form>
 		</div>
 	</div>
-	<div class="scrollable-footer" style="background-color: #fff;padding: 5px 20px;">
-		<table width="100%" ng-show="!isAuth">
+	<div class="scrollable-footer" style="background-color: #fff;padding: 10px 20px 5px 20px;border-top: 1px solid #cccccc;">
+		<table style="width: 100%;">
 			<colgroup>
-				<col width="0" />
 				<col width="100%" />
-				<col width="0" />
-				<col width="0" />
 			</colgroup>
 			<tr>
-				<td><a type="button" class="btn btn-sm btn-default pull-right" href="#/register">Register</a></td>
-				<td></td>
-				<td><button ng-disabled="!loginForm.$valid" type="button" class="btn btn-sm btn-primary pull-right" ng-click="login()">Log In</button></td>
-				<td style="padding-left:6px;"><a type="button" class="btn btn-sm btn-default pull-right" href="#">Cancel</a></td>
+				<td style="text-align:center;">
+					<a type="button" class="btn btn-xs btn-default" style="margin:0px 2px;" href="#/register">Register</a>
+					<a type="button" class="btn btn-xs btn-default" style="margin:0px 2px;" href="#/">Cancel</a>
+					<button type="button" class="btn btn-xs btn-primary" style="margin:0px 2px;"  ng-disabled="!loginForm.$valid" ng-click="login()">Log In</button>
+				</td>
 			</tr>
 		</table>
 	</div>

@@ -107,6 +107,10 @@
 		
 		$log.info('Managed Golfers Successfully');
 		ShgaEvent.addGolfers(rootRef, $scope.shgaEvent, golfers);
-		$location.path('/', false);
+		$location.path('/outing/' + eventId, false);
+	};
+	
+	$scope.cancel = function() {
+		$location.path('/outing/' + eventId, false);
 	};
 } ]);

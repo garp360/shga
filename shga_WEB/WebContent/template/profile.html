@@ -1,7 +1,7 @@
 <div content-for="title">
 	<span>Profile</span>
 </div>
-<div class="scrollable" style="background-color: #fff;padding: 5px;" ng-controller="ProfileController">
+<div class="scrollable adjust" ng-controller="ProfileController">
 	<div class="scrollable-content">
 		<div ng-show="!isloaded">
 			<div>Loading...</div>
@@ -43,19 +43,15 @@
 				</div>
 			</form>
 		</div>
-		<div class="scrollable-footer" style="background-color: #fff;padding: 5px 20px;" ng-show="isloaded">
+		<div class="scrollable-footer" style="background-color: #fff;padding: 10px 20px 5px 20px;border-top: 1px solid #cccccc;" ng-show="isloaded">
 			<table width="100%" >
-				<colgroup>
-					<col width="100%" />
-					<col width="0" />
-					<col width="0" />
-				</colgroup>
 				<tr>
-					<td></td>
-					<td><button type="submit" class="btn btn-sm btn-primary pull-right" ng-click="save()">Save</button></td>
-					<td style="padding-left: 6px;"><a type="button" class="btn btn-sm btn-default pull-right" href="#">Cancel</a></td>
+					<td align="center">
+						<button type="submit" class="btn btn-xs btn-default" ng-click="cancel()">Cancel</button>
+						<button type="submit" class="btn btn-xs btn-primary" ng-click="save()">Save</button>
+					</td>
 				</tr>
-			</table>
+			</table>	
 		</div>
 	</div>
 </div>
