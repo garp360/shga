@@ -23,7 +23,7 @@
 						<button type="button" class="btn btn-default btn-sm btn-link" ng-click="dropOut(shgaEvent, golfer.uid)">Remove</button>
 					</td>
 					<td style="width: 70px;"valign="middle" ng-show="isAuth && isUserInRole('SHGA_ADMIN')">
-						<a type="button" class="btn btn-default btn-sm btn-link" href="#/profile/{{golfer.uid}}">Edit</a>
+						<a type="button" class="btn btn-default btn-sm btn-link" href="#/profile/{{golfer.uid}}/{{shgaEvent.eventId}}">Edit</a>
 					</td>
 				</tr>
 			</table>

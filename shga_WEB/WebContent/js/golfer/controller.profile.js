@@ -37,16 +37,13 @@ angular.module('shgaApp.controllers.Profile', []).controller('ProfileController'
 		});
 		$scope.isloaded = true;
 	});
-
-	$scope.cancel = function() {
-		
-	};
 	
 	$scope.save = function() {
 		$log.info('Requesting update to profile...');
 		var profile = _getProfile($scope.profile);
 		var allEvents = $scope.shgaEvents;
 		Profile.update(rootRef, profile, allEvents);
+		__back();
 	};
 
 	$scope.cancel = function() {

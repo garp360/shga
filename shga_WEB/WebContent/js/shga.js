@@ -12,6 +12,9 @@ app.config(function($routeProvider) {
 	$routeProvider.when('/', {
 		templateUrl : 'template/home.html',
 		reloadOnSearch : true
+	}).when('/home', {
+		templateUrl : 'template/home.html',
+		reloadOnSearch : false
 	}).when('/login', {
 		templateUrl : 'template/login.html',
 		reloadOnSearch : false
