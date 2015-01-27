@@ -6,12 +6,6 @@
 		<div style="margin:0px 20px;">
 			<form>
 				<div class="form-group">
-					<label for="inputGroup1" class="control-label hb-control-label">Group</label>
-					<div>
-						<select id="inputGroup1" ng-model="shgaEvent.group" ng-options="golfGroup.name for golfGroup in golfGroups"></select>
-					</div>
-				</div>
-				<div class="form-group">
 					<label for="inputEventDate1" class="control-label hb-control-label">Event Date</label>
 					<div>
 						<p class="input-group">
@@ -22,6 +16,12 @@
 								</button>
 							</span>
 						</p>
+					</div>
+				</div>
+				<div class="form-group" style="margin-top: -5px;">
+					<label for="inputGroup1" class="control-label hb-control-label">Group</label>
+					<div>
+						<select id="inputGroup1" ng-model="shgaEvent.group" ng-options="golfGroup.name for golfGroup in golfGroups"></select>
 					</div>
 				</div>
 				<div class="form-group">

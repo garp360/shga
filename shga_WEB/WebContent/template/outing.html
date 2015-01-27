@@ -27,22 +27,22 @@
 					</td>
 				</tr>
 			</table>
-			<div class="scrollable-footer" style="background-color: #fff;padding: 10px 20px 5px 20px;border-top: 1px solid #cccccc;" ng-show="isloaded">
-				<table style="width: 100%;">
-					<colgroup>
-						<col width="100%" />
-					</colgroup>
-					<tr>
-						<td style="text-align:center;">
-							<button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" style="margin:0px 2px;" ng-click="deleteEvent(shgaEvent)">Delete</button>
-							<button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" style="margin:0px 2px;" ng-click="manageGolfers(shgaEvent)">Add Golfers</button>
-							<button ng-show="isAuth && !isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-success adjust btn-xs" style="margin:0px 2px;" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
-							<button ng-show="isAuth && isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-danger adjust btn-xs" style="margin:0px 2px;" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
-							<button type="button" class="btn btn-default btn-xs" style="margin:0px 2px;" ng-click="cancel()">Ok</button>
-						</td>
-					</tr>
-				</table>
-			</div>
 		</div>
+	</div>
+	<div class="scrollable-footer" style="background-color: #fff;padding: 10px 20px 5px 20px;border-top: 1px solid #cccccc;" ng-show="isloaded">
+		<table style="width: 100%;">
+			<colgroup>
+				<col width="100%" />
+			</colgroup>
+			<tr>
+				<td style="text-align:center;">
+					<button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" style="margin:0px 2px;" ng-click="deleteEvent(shgaEvent)">Delete</button>
+					<button ng-show="isAuth && isUserInRole('SHGA_ADMIN')" type="button" class="btn btn-default btn-xs" style="margin:0px 2px;" ng-click="manageGolfers(shgaEvent)">Add Golfers</button>
+					<button ng-show="isAuth && !isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-success adjust btn-xs" style="margin:0px 2px;" ng-click="signUp(shgaEvent, user)">Sign Up!</button>
+					<button ng-show="isAuth && isSignedUp(shgaEvent, user.uid)" type="button" class="btn btn-danger adjust btn-xs" style="margin:0px 2px;" ng-click="dropOut(shgaEvent, user.uid)">Drop Out!</button>
+					<button type="button" class="btn btn-default btn-xs" style="margin:0px 2px;" ng-click="cancel()">Ok</button>
+				</td>
+			</tr>
+		</table>
 	</div>
 </div>

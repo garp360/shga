@@ -166,3 +166,12 @@
         background-color: #043591;
     }
 }
+
+.form-group {
+  margin-bottom: 0px;
+  padding: 3px 0px;
+}
+
+label {
+	margin-bottom: 2px;
+}
