@@ -4,11 +4,33 @@
 }
 
 .hb-badge-black {
-    background-color: black;
+    background-color: #000000;
 }
 
 .hb-badge-blue {
-    background-color: blue;
+    background-color: #1759D4;
+}
+
+.hb-badge-silver {
+    background-color: #C2CBD1;
+}
+
+.hb-badge-white {
+    background-color: #F5F5F5;
+    color: #676767;
+    border: 1px solid #bbbbbb;
+}
+
+.hb-badge-gold {
+    background-color: #878435;
+}
+
+.hb-badge-green {
+    background-color: #398524;
+}
+
+.hb-badge-burgundy {
+    background-color: #6E0C0A;
 }
 
 .hb-brand {

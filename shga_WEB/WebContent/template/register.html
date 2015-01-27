@@ -1,67 +1,70 @@
 <div content-for="title">
 	<span>Register</span>
 </div>
-<div class="scrollable" ng-controller="RegistrationController">
+<div class="scrollable adjust" ng-controller="RegistrationController">
 	<div class="scrollable-content">
-		<div class="list-group text-left hb-list-group">
-			<div class="list-group-item list-group-item-home media">
-				<form class="form-horizontal" role="form">
-					<div class="form-group">
-						<label for="username" class="col-sm-3 control-label hb-control-label">Email</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" id="username" placeholder="Email" ng-model="registrant.username" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="password" class="col-sm-3 control-label hb-control-label">Password</label>
-						<div class="col-sm-9">
-							<input type="password" class="form-control" id="password1" placeholder="SHGA password" ng-model="registrant.password1" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="password2" class="col-sm-3 control-label hb-control-label">Confirm Password</label>
-						<div class="col-sm-9">
-							<input type="password" class="form-control" id="password2" placeholder="Confirm password" ng-model="registrant.password2" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="firstName" class="col-sm-3 control-label hb-control-label">First Name</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" id="firstName" placeholder="First Name" ng-model="registrant.firstName" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="lastName" class="col-sm-3 control-label hb-control-label">Last Name</label>
-						<div class="col-sm-9">
-							<input type="text" class="form-control" id="lastName" placeholder="Last Name" ng-model="registrant.lastName" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="hcp" class="col-sm-3 control-label hb-control-label">HCP</label>
-						<div class="col-sm-9">
-							<input bs-form-control type="number" ng-model="registrant.hcp" label="HCP" label-class="col-xs-3 col-sm-2 col-lg-1" class="col-xs-9 col-sm-10 col-lg-11" />
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="teebox" class="col-sm-3 control-label hb-control-label">Tee Box</label>
-						<div class="col-sm-9" style="padding-top:7px;">
-							<select id="teebox" ng-model="registrant.teebox" ng-options="teebox.color for teebox in teeboxes"></select>
-						</div>
-					</div>
-					<table width="100%">
-						<colgroup>
-							<col />
-							<col width="0" />
-							<col width="0" />
-						</colgroup>
-						<tr>
-							<td></td>
-							<td><button type="submit" class="btn btn-sm btn-primary pull-right" ng-click="register()">Register</button></td>
-							<td style="padding-left:6px;"><a type="button" class="btn btn-sm btn-default pull-right" href="#">Cancel</a></td>
-						</tr>
-					</table>
-				</form>
-			</div>
+		<div ng-show="isAuth" style="margin:0px 20px;">
+			You are logged in!
 		</div>
+		<div ng-show="!isAuth" style="margin:0px 20px;">
+			<form class="form" role="form">
+				<div class="form-group">
+					<label for="username" class="control-label hb-control-label">Email</label>
+					<div>
+						<input type="text" class="form-control" id="username" placeholder="Email" ng-model="registrant.username" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="password" class="control-label hb-control-label">Password</label>
+					<div>
+						<input type="password" class="form-control" id="password1" placeholder="SHGA password" ng-model="registrant.password1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="password2" class="control-label hb-control-label">Confirm Password</label>
+					<div>
+						<input type="password" class="form-control" id="password2" placeholder="Confirm password" ng-model="registrant.password2" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="firstName" class="control-label hb-control-label">First Name</label>
+					<div>
+						<input type="text" class="form-control" id="firstName" placeholder="First Name" ng-model="registrant.firstName" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="lastName" class="control-label hb-control-label">Last Name</label>
+					<div>
+						<input type="text" class="form-control" id="lastName" placeholder="Last Name" ng-model="registrant.lastName" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="hcp" class="control-label hb-control-label">HCP</label>
+					<div>
+						<input bs-form-control type="number" only-digits min-num="0" max-num="18" ng-model="registrant.hcp" label="HCP" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="teebox" class="control-label hb-control-label">Tee Box</label>
+					<div>
+						<select id="teebox" ng-model="registrant.teebox" ng-options="teebox.color for teebox in teeboxes"></select>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="scrollable-footer" style="background-color: #fff;padding: 10px 20px 5px 20px;border-top: 1px solid #cccccc;">
+		<table style="width: 100%;">
+			<colgroup>
+				<col width="100%" />
+			</colgroup>
+			<tr>
+				<td style="text-align:center;">
+					<a type="button" class="btn btn-xs btn-default" href="#home" ng-show="!isAuth">Cancel</a>
+					<button type="submit" class="btn btn-xs btn-primary" ng-click="register()" ng-show="!isAuth">Register</button>
+					<a type="button" class="btn btn-xs btn-default" href="#home" ng-show="isAuth">Ok</a>
+				</td>
+			</tr>
+		</table>
 	</div>
 </div>

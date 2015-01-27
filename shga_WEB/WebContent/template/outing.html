@@ -16,7 +16,13 @@
      		<table class="table table-bordered table-hover" style="width: 100%;">
 				<tr ng-repeat="golfer in shgaEvent.golfers | orderBy:['lastName','firstName']">
 					<td style="width: 44px;" valign="middle"><h4>
-							<span style="width: 40px;" ng-class="{'label label-sm pull-right hb-badge-black' : golfer.teebox.color == 'Black', 'label label-sm pull-right hb-badge-blue' : golfer.teebox.color == 'Blue'}">{{golfer.hcp}}</span>
+							<span style="width: 40px;" ng-class="{'label label-sm pull-right hb-badge-black' : golfer.teebox.color == 'Black', 
+								'label label-sm pull-right hb-badge-blue' : golfer.teebox.color == 'Blue',
+								'label label-sm pull-right hb-badge-white' : golfer.teebox.color == 'White',
+								'label label-sm pull-right hb-badge-gold' : golfer.teebox.color == 'Gold',
+								'label label-sm pull-right hb-badge-burgundy' : golfer.teebox.color == 'Burgundy',
+								'label label-sm pull-right hb-badge-silver' : golfer.teebox.color == 'Silver',
+								'label label-sm pull-right hb-badge-green' : golfer.teebox.color == 'Green'}">{{golfer.hcp}}</span>
 						</h4></td>
 					<td valign="middle">{{golfer.firstName}} {{golfer.lastName}}</td>
 					<td style="width: 70px;" valign="middle" ng-show="isAuth && isUserInRole('SHGA_ADMIN')">

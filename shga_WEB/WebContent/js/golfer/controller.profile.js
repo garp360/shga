@@ -60,7 +60,7 @@ angular.module('shgaApp.controllers.Profile', []).controller('ProfileController'
 			roles : userProfile.roles,
 			email : userProfile.email,
 			teebox : userProfile.teebox,
-			hcp : userProfile.hcp,
+			hcp : parseInt(userProfile.hcp),
 			ghin : userProfile.ghin,
 			pw : userProfile.pw
 		};
