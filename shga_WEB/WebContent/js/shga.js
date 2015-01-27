@@ -11,7 +11,7 @@ app.config(function(datepickerConfig, datepickerPopupConfig) {
 app.config(function($routeProvider) {
 	$routeProvider.when('/', {
 		templateUrl : 'template/home.html',
-		reloadOnSearch : true
+		reloadOnSearch : false
 	}).when('/home', {
 		templateUrl : 'template/home.html',
 		reloadOnSearch : false
