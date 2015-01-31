@@ -197,3 +197,9 @@
 label {
 	margin-bottom: 2px;
 }
+
+.scrollable-footer-adjust {
+	background-color:#eeeeee;
+	padding: 4px 4px 8px 4px;
+	border-top: 1px solid #cccccc;
+}
