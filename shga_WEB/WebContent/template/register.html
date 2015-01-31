@@ -41,7 +41,7 @@
 				<div class="form-group">
 					<label for="hcp" class="control-label hb-control-label">HCP</label>
 					<div>
-						<input bs-form-control type="number" only-digits min-num="0" max-num="18" ng-model="registrant.hcp" label="HCP" />
+						<select id="hcp" ng-model="registrant.hcp" ng-options="hcp for hcp in hcps"></select>
 					</div>
 				</div>
 				<div class="form-group">

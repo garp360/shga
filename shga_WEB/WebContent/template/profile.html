@@ -32,7 +32,7 @@
 				<div class="form-group">
 					<label for="hcp">HCP</label>
 					<div>
-						<input bs-form-control type="number" id="hcp" only-digits min-num="0" max-num="18" ng-model="profile.hcp" label="HCP" />
+						<select id="hcp" ng-model="profile.hcp" ng-options="hcp for hcp in hcps"></select>
 					</div>
 				</div>
 				<div class="form-group">

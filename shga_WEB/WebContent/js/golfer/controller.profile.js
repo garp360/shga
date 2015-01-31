@@ -12,7 +12,13 @@ angular.module('shgaApp.controllers.Profile', []).controller('ProfileController'
 		$log.info('Loaded Profile! ' + userProfile.firstName);
 		$scope.profile = _getProfile(userProfile);
 		$log.info('Loaded Profile! ' + $scope.profile.teebox.color);
-
+		$scope.hcps = [
+           -5,-4,-3,-2,-1,0,1,2,3,4,5,6,7,8,9,
+           10,11,12,13,14,15,16,17,18,19,
+           20,21,22,23,24,25,26,27,28,29,30,31,
+           32,33,34,35,36
+		];
+		
 		$scope.teeboxes = [ {
 			color : 'Gold'
 		}, {
@@ -28,13 +34,21 @@ angular.module('shgaApp.controllers.Profile', []).controller('ProfileController'
 		} ];
 
 		var found = false;
-
+		angular.forEach($scope.hcps, function(hcp) {
+			if (hcp == $scope.profile.hcp && !found) {
+				found = true;
+				$scope.profile.hcp = hcp;
+			}
+		});
+		
+		found = false;
 		angular.forEach($scope.teeboxes, function(teebox) {
 			if (teebox.color.toLowerCase() == $scope.profile.teebox.color.toLowerCase() && !found) {
 				found = true;
 				$scope.profile.teebox = teebox;
 			}
 		});
+		
 		$scope.isloaded = true;
 	});
 	
