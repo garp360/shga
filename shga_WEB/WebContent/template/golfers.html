@@ -18,35 +18,80 @@
 					<div class="form-group">
 						<label for="course">Course<br /><span style="font-weight: normal;">{{shgaEvent.course.name}}</span></label>
 					</div>
+					<div class="form-group">
+						<label for="course">Golfers<br /></label>
+					</div>
 					<div class="row">
-						<div class="col-xs-12 col-sm-5"><select ng-model="availableGolfersSelected" id="selectGroup1" multiple size="10" style="width: 100%; height: 10em" ng-options="availableGolfer as availableGolfer.firstName + ' ' + availableGolfer.lastName  for availableGolfer in availableGolfers | orderBy:['lastName','firstName']"></select></div>
+						<div class="col-xs-12 col-sm-5">
+<!-- 							<select ng-model="availableGolfersSelected" id="selectGroup1" multiple size="10" style="width: 100%; height: 10em" ng-options="availableGolfer as availableGolfer.firstName + ' ' + availableGolfer.lastName  for availableGolfer in availableGolfers | orderBy:['lastName','firstName']"></select> -->
+							<div style="overflow: scroll;width: 100%;height:10em;border:1px solid #333333;">
+							<table style="width: 100%;">
+								<colgroup>
+									<col width="30" />
+									<col />
+								</colgroup>
+								<thead style="border-bottom:1px solid #333333;background-color:#eeeeee;">
+									<tr>
+										<td align="center">&nbsp;</td>
+										<td>Available Golfers</td>
+									</tr>
+								</thead>
+								<tbody ng-repeat="availableGolfer in availableGolfers | orderBy:['lastName','firstName']">
+								<tr>
+									<td align="center"><input type="checkbox" value="{{availableGolfer.id}}"></td>
+									<td>{{availableGolfer.firstName}} {{availableGolfer.lastName}}</td>
+								</tr>
+								</tbody>
+							</table>
+							</div>
+						</div>
 						<div class="col-xs-12 col-sm-2">
 							<div class="row">
-								<div class="col-xs-2 col-sm-12"></div>
-								<div class="col-xs-2 col-sm-12">
-									<button type="button" class="btn btn-primary btn-xs hb-multiselect-button" ng-click="addGolfer(true)">
-										<span class="fa fa-chevron-right"></span><span class="fa fa-chevron-right"></span>
+								<div class="col-xs-3 col-sm-12" style="text-align: center;">
+									<button type="button" class="btn btn-primary btn-xs" ng-click="addGolfer(true)">
+										Add All
 									</button>
 								</div>
-								<div class="col-xs-2 col-sm-12">
-									<button type="button" class="btn btn-primary btn-xs hb-multiselect-button" ng-click="addGolfer(false)">
-										<span class="fa fa-chevron-right"></span>
+								<div class="col-xs-3 col-sm-12" style="text-align: center;">
+									<button type="button" class="btn btn-primary btn-xs" ng-click="addGolfer(false)">
+										Add Selected
 									</button>
 								</div>
-								<div class="col-xs-2 col-sm-12">
-									<button type="button" class="btn btn-primary btn-xs hb-multiselect-button" ng-click="removeGolfer(false)">
-										<span class="fa fa-chevron-left"></span>
+								<div class="col-xs-3 col-sm-12" style="text-align: center;">
+									<button type="button" class="btn btn-primary btn-xs" ng-click="removeGolfer(false)">
+										Remove Selected
 									</button>
 								</div>
-								<div class="col-xs-2 col-sm-12">
-									<button type="button" class="btn btn-primary btn-xs hb-multiselect-button" ng-click="removeGolfer(true)">
-										<span class="fa fa-chevron-left"></span><span class="fa fa-chevron-left"></span>
+								<div class="col-xs-3 col-sm-12" style="text-align: center;">
+									<button type="button" class="btn btn-primary btn-xs" ng-click="removeGolfer(true)">
+										Remove All
 									</button>
 								</div>
-								<div class="col-xs-2 col-sm-12"></div>
 							</div>						
 						</div>
-						<div class="col-xs-12 col-sm-5"><select ng-model="scheduledGolfersSelected" id="selectGroup2" multiple size="10" style="width: 100%; height: 10em" ng-options="scheduledGolfer as scheduledGolfer.firstName + ' ' + scheduledGolfer.lastName  for scheduledGolfer in scheduledGolfers | orderBy:['lastName','firstName']"></select></div>
+						<div class="col-xs-12 col-sm-5">
+<!-- 						<select ng-model="scheduledGolfersSelected" id="selectGroup2" multiple size="10" style="width: 100%; height: 10em" ng-options="scheduledGolfer as scheduledGolfer.firstName + ' ' + scheduledGolfer.lastName  for scheduledGolfer in scheduledGolfers | orderBy:['lastName','firstName']"></select> -->
+							<div style="overflow: scroll;width: 100%;height:10em;border:1px solid #333333;">
+							<table style="width: 100%;">
+								<colgroup>
+									<col width="30" />
+									<col />
+								</colgroup>
+								<thead style="border-bottom:1px solid #333333;background-color:#eeeeee;">
+									<tr>
+										<td align="center">&nbsp;</td>
+										<td>Scheduled Golfers</td>
+									</tr>
+								</thead>
+								<tbody ng-repeat="scheduledGolfer in scheduledGolfers | orderBy:['lastName','firstName']">
+								<tr>
+									<td align="center"><input type="checkbox" value="{{scheduledGolfer.id}}"></td>
+									<td>{{scheduledGolfer.firstName}} {{scheduledGolfer.lastName}}</td>
+								</tr>
+								</tbody>
+							</table>
+							</div>
+						</div>
 					</div>
 				</form>
 			</div>
