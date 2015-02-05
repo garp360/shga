@@ -1,6 +1,8 @@
- angular.module('shgaApp.controllers.Event').controller('ManageEventGolfersController', [ "$scope", "$routeParams", "$location", "$log", "ShgaEvent", "Golfer", function($scope, $routeParams, $location, $log, ShgaEvent, Golfer) {
+ angular.module('shgaApp.controllers.Event').controller('ManageEventGolfersController', [ "$scope", "$routeParams", "$location", "$log", "screenSize", "ShgaEvent", "Golfer", function($scope, $routeParams, $location, $log, screenSize, ShgaEvent, Golfer) {
 	 var rootRef = new Firebase("https://shga.firebaseio.com");
 	 var eventId = $routeParams.eventId;
+	 $scope.desktop = screenSize.is('md, lg');
+	 $scope.mobile = screenSize.is('xs, sm');
 	$scope.shgaEvent = {};
 	$scope.allGolfers = [];
 	$scope.scheduledGolfers = [];
@@ -22,6 +24,13 @@
 			
 			filterForEvent();
 			$scope.isloaded = true;
+		});
+		
+		$scope.desktop = screenSize.on('sm, md, lg', function(match){
+		    $scope.desktop = match;
+		});
+		$scope.mobile = screenSize.on('xs', function(match){
+		    $scope.mobile = match;
 		});
 	});
 

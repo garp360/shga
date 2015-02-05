@@ -176,6 +176,10 @@
     color: #b8c5fe;
 }
 
+.hb-multi-select-top {
+	margin-top:30px;
+}
+
 @media (max-width: 767px) {
     .hb-navbar-blue.navbar-default .hb-navbar-blue.navbar-nav .open .dropdown-menu > li > a {
         color: #f9f9f9;

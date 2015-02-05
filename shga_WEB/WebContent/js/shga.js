@@ -1,5 +1,5 @@
 var app = angular.module('shgaApp', [ 'firebase', 'ui.bootstrap', 'ngRoute', 'ngTouch', 
-                                      'mobile-angular-ui', 'shgaApp.factories', 'shgaApp.filters', 
+                                      'mobile-angular-ui', 'matchMedia', 'shgaApp.factories', 'shgaApp.filters', 
                                       'shgaApp.controllers', 'shgaApp.directives' ]);
 
 app.config(function(datepickerConfig, datepickerPopupConfig) {
