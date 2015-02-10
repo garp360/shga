@@ -1,0 +1,53 @@
+<div content-for="title">
+	<span>Password Reset</span>
+</div>
+<div class="scrollable adjust" ng-controller="PwChangeController">
+	<div class="scrollable-content">
+		<div ng-show="isAuth" style="margin:0px 20px;">
+			<form class="form" role="form" name="pwform">
+				<div class="form-group">
+					<label for="email" class="control-label hb-control-label">SHGA Email</label>
+					<label for="email" class="control-label">{{profile.email}}</label>
+				</div>
+				<div class="form-group">
+					<label for=pw1 class="control-label hb-control-label">New Password</label>
+					<div>
+						<input type="password" class="form-control" id="pw1" ng-model="pwd1" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="pw2" class="control-label hb-control-label">Confirm New Password</label>
+					<div>
+						<input type="password" class="form-control" id="pw2" ng-model="pwd2" required>
+					</div>
+					<div>
+						<label ng-show="showPwdMatchError" class='validation-error-messages'>{{pwdMatchError}}</label>
+					</div>
+				</div>
+			</form>
+			<table style="width: 100%;">
+				<colgroup>
+					<col width="100%" />
+				</colgroup>
+				<tr>
+					<td style="text-align:center;">
+						<h4 ng-show="showMessage">{{message}}</h4>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="scrollable-footer scrollable-footer-adjust">
+		<table style="width: 100%;">
+			<colgroup>
+				<col width="100%" />
+			</colgroup>
+			<tr>
+				<td style="text-align:center;">
+					<a type="button" class="btn btn-sm btn-default" href="#home">Cancel</a>
+					<button type="submit" class="btn btn-sm btn-primary" ng-click="change()">Change Password</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>

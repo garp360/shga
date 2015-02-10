@@ -40,6 +40,49 @@ angular.module('shgaApp.factory.Profile', []).factory('Profile', function($fireb
 		};
 	};
 	
+	
+	factory.updatePwd = function pwUpdate(rootRef, golfer, pwd) {
+		var authData = rootRef.getAuth();
+		var deferred = $q.defer();
+		var message = "Error changing password!";
+		if (golfer && authData) 
+		{
+			var eventGolferId = golfer.uid;
+			var email = golfer.uid;
+			var oldPwd = golfer.pw;
+			var newPwd = pwd;
+			
+			rootRef.changePassword({
+			  email: email,
+			  oldPassword: oldPwd,
+			  newPassword: newPwd
+			}, function(error) {
+			  if (error) {
+			    switch (error.code) {
+			      case "INVALID_PASSWORD":
+			        console.log("The specified user account password is incorrect.");
+			        message = "The specified user account password is incorrect.";
+			        break;
+			      case "INVALID_USER":
+			        console.log("The specified user account does not exist.");
+			        message = "The specified user account does not exist.";
+			        break;
+			      default:
+			        console.log("Error changing password:", error);
+			    }
+			    deferred.reject(message);
+			  } else {
+				var profile = _getProfile(golfer);
+				rootRef.child('golfers').child(eventGolferId).set(angular.fromJson(profile));  
+			    console.log("User password changed successfully!");
+			    message = "User password changed successfully!";
+			    deferred.resolve(message);
+			  }
+			});
+		}
+		return deferred.promise;
+	};
+	
 	function _getShgaEvent(event, golfers) {
 		var shgaEvent = {
 		    eventId : event.eventId,

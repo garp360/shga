@@ -6,6 +6,10 @@
 		<div class="list-group" ui-turn-off='sidebarLeft'>
 			<a class="list-group-item" href="#/">
 				Home <i class="fa fa-chevron-right pull-right"></i></a> 
+			<a ng-show="!isAuth" class="list-group-item" href="#/pwreset">
+				Reset Password <i class="fa fa-chevron-right pull-right"></i></a> 
+			<a ng-show="isAuth" class="list-group-item" href="#/pwchange/{{user.uid}}">
+				Change Password <i class="fa fa-chevron-right pull-right"></i></a> 
 			<a ng-show="isAuth" class="list-group-item" href="#/profile/{{user.uid}}">
 				Profile <i class="fa fa-chevron-right pull-right"></i></a> 
 			<a ng-show="isAuth && isUserInRole('SHGA_ADMIN')" class="list-group-item" href="#/event">
