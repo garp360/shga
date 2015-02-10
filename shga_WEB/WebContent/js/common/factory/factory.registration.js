@@ -61,6 +61,37 @@ angular.module('shgaApp.factory.Registration', []).factory('Registration', funct
 		});
 		return deferred.promise;
 	};
+	
+	factory.resetPassword = function resetPassword(rootRef, userObject)
+	{
+		var deferred = $q.defer();
+		rootRef.resetPassword(
+			userObject
+		, function(error) 
+		{
+			var errorMsg = "Error resetting password";
+			if (error) 
+			{
+				switch (error.code) 
+				{
+					case "INVALID_USER":
+						errorMsg = "The specified user account does not exist.";
+						break;
+					default:
+						errorMsg = "Error resetting password";
+				}
+				
+				console.log(errorMsg);
+				deferred.reject(errorMsg);
+			} 
+			else 
+			{
+				console.log("Password reset email sent successfully!");
+				deferred.resolve("Password reset email sent successfully!  Check your email for instructions on how to change your password.");
+			}
+		});
+		return deferred.promise;
+	};
 
 	return factory;
 });

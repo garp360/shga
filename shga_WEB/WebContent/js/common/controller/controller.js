@@ -1,1 +1,1 @@
-angular.module('shgaApp.controllers', ['shgaApp.controllers.Event', 'shgaApp.controllers.Profile', 'shgaApp.controllers.Registration']);
+angular.module('shgaApp.controllers', ['shgaApp.controllers.Event', 'shgaApp.controllers.Profile', 'shgaApp.controllers.Registration', 'shgaApp.controllers.Credentials', 'shgaApp.controllers.PwChangeController']);

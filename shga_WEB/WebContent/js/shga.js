@@ -41,5 +41,11 @@ app.config(function($routeProvider) {
 	}).when('/golfers/:eventId', {
 		templateUrl : 'template/golfers.html',
 		reloadOnSearch : false
+	}).when('/pwreset', {
+		templateUrl : 'template/pwreset.html',
+		reloadOnSearch : false
+	}).when('/pwchange/:uid', {
+		templateUrl : 'template/pwchange.html',
+		reloadOnSearch : false
 	}).otherwise({redirectTo: '/'});
 });
