@@ -11,6 +11,27 @@ angular.module('shgaApp.factory.Profile', []).factory('Profile', function($fireb
 		return sync.$loaded();
 	};
 	
+	factory.import = function update(importGolfers) {
+		var rootRef = new Firebase("https://shga.firebaseio.com");
+		if (importGolfers) 
+		{
+			_getAllGolfers().then(function(allGolfers){
+				angular.forEach(allGolfers, function(existingGolfer) {
+					angular.forEach(importGolfers, function(importGolfer) {
+						if(importGolfer.firstName === existingGolfer.firstName && 
+								importGolfer.lastName === existingGolfer.lastName) {
+							var tmpGolfer = _getProfile(existingGolfer);
+							tmpGolfer.hcp = importGolfer.hcp;
+							$log.info('Updating profile for ' + tmpGolfer.firstName + ' ' + tmpGolfer.lastName + " old hcp=" + tmpGolfer.hcp + " | new hcp=" + importGolfer.hcp);
+							rootRef.child('golfers').child(tmpGolfer.uid).set(tmpGolfer);
+						}
+					});
+				});
+			});
+			
+		};
+	};
+	
 	factory.update = function update(rootRef, golfer, shgaEvents) {
 		$log.info('Updating profile for ' + golfer.firstName + ' ' + golfer.lastName);
 		var authData = rootRef.getAuth();
@@ -82,6 +103,14 @@ angular.module('shgaApp.factory.Profile', []).factory('Profile', function($fireb
 		}
 		return deferred.promise;
 	};
+	
+	function _getAllGolfers() {
+		var ref = new Firebase("https://shga.firebaseio.com/golfers");
+		var sync = $firebase(ref);
+		var golfersArray = sync.$asArray();
+
+		return golfersArray.$loaded();
+	}
 	
 	function _getShgaEvent(event, golfers) {
 		var shgaEvent = {

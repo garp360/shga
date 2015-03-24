@@ -47,5 +47,8 @@ app.config(function($routeProvider) {
 	}).when('/pwchange/:uid', {
 		templateUrl : 'template/pwchange.html',
 		reloadOnSearch : false
+	}).when('/import', {
+		templateUrl : 'template/import.html',
+		controller: "ImportController"
 	}).otherwise({redirectTo: '/'});
 });

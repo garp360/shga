@@ -1,0 +1,23 @@
+<div content-for="title">
+	<span>Import</span>
+</div>
+<div class="scrollable adjust">
+	<div class="scrollable-content">
+		<div>
+			<input type="file" id="file" name="file"/>
+		</div>
+	</div>
+	<div class="scrollable-footer scrollable-footer-adjust">
+		<table style="width: 100%;">
+			<colgroup>
+				<col width="100%" />
+			</colgroup>
+			<tr>
+				<td style="text-align:center;">
+					<button type="submit" class="btn btn-sm btn-default" ng-click="cancel()">Cancel</button>
+					<button type="submit" class="btn btn-sm btn-primary" ng-click="import()">Import</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>
