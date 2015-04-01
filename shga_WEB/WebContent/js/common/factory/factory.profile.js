@@ -47,7 +47,7 @@ angular.module('shgaApp.factory.Profile', []).factory('Profile', function($fireb
 		var message = "Error changing password!";
 		if (golfer && authData) 
 		{
-			var eventGolferId = golfer.uid;
+			var golferId = golfer.uid;
 			var email = golfer.uid;
 			var oldPwd = golfer.pw;
 			var newPwd = pwd;
@@ -73,7 +73,7 @@ angular.module('shgaApp.factory.Profile', []).factory('Profile', function($fireb
 			    deferred.reject(message);
 			  } else {
 				var profile = _getProfile(golfer);
-				rootRef.child('golfers').child(eventGolferId).set(angular.fromJson(profile));  
+				rootRef.child('golfers').child(golferId).set(angular.fromJson(profile));  
 			    console.log("User password changed successfully!");
 			    message = "User password changed successfully!";
 			    deferred.resolve(message);
