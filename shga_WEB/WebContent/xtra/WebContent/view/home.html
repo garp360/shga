@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Demo {{controllerName}}</title>
+</head>
+<body>
+	<table>
+		<tr>
+			<td>First Name:</td>
+			<td><input type="text" ng-model="criteria.firstname" /></td>
+			<td><input type="button" ng-click="search()" value="Search" /></td>
+			<td><input type="button" value="Clear" ng-click="clear()" /></td>
+			<td><a href="#/create">New User</a></td>
+			<td><a href="#/import">Import</a></td>	
+		</tr>
+		<tr>
+			<td>Last Name:</td>
+			<td><input type="text" ng-model="criteria.lastname" /></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+	<table cellpadding="3" cellspacing="0" style="border-collapse: collapse; border: 1px solid #444444;" border="1">
+		<tr ng-repeat="user in data | orderBy : 'hcp' track by $index"> 
+			<td>{{$index + 1}}</td>			
+			<td><img ng-show="!user.isActive" alt="" ng-src="image/deactivated.png" /><img ng-show="user.isActive" alt="" ng-src="image/activated.png" /></td>			
+			<td>{{user.effectiveDate}}</td>			
+			<td>{{user.hcp}}</td>			
+			<td><a href="#/detail/{{user.id}}">{{user.firstname}} {{user.lastname}}</a></td>			
+			<td><input type="button" value="Delete" ng-click="deleteUser(user.id)" /></td>			
+			<td><input ng-show="!user.isActive" type="button" value="Activate" ng-click="activate(user, true)" /><input ng-show="user.isActive" type="button" value="Deactivate" ng-click="activate(user, false)" /></td>					
+		</tr>
+	</table>
+</body>
+</html>

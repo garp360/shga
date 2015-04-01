@@ -5,6 +5,7 @@ angular.module('shgaApp.controllers.Profile', []).controller('ProfileController'
 	$scope.shgaEvents = ShgaEvent.getAllEvents();
 	$scope.profile = {};
 	$scope.isloaded = false;
+	$scope.handicap = {};
 
 	$log.info('Requesting EditProfile userId=[' + userId + ']');
 
@@ -18,6 +19,7 @@ angular.module('shgaApp.controllers.Profile', []).controller('ProfileController'
            20,21,22,23,24,25,26,27,28,29,30,31,
            32,33,34,35,36
 		];
+		$scope.decimals = [0,1,2,3,4,5,6,7,8,9];
 		
 		$scope.teeboxes = [ {
 			color : 'Gold'
@@ -34,10 +36,24 @@ angular.module('shgaApp.controllers.Profile', []).controller('ProfileController'
 		} ];
 
 		var found = false;
+		var i = parseInt($scope.profile.hcp.toString().split(".")[0]);
+		var d = parseInt($scope.profile.hcp.toString().split(".")[1]);
+		$log.debug("integer = " + i);
+		$log.debug("decimal = " + d);
+
 		angular.forEach($scope.hcps, function(hcp) {
-			if (hcp == $scope.profile.hcp && !found) {
+			if (hcp === i && !found) {
 				found = true;
-				$scope.profile.hcp = hcp;
+				$scope.handicap.integer = hcp;
+				$log.debug("integer = " + hcp);
+			}
+		});
+		var found = false;
+		angular.forEach($scope.decimals, function(decimal) {
+			if (decimal === d && !found) {
+				found = true;
+				$scope.handicap.decimal = decimal;
+				$log.debug("decimal = " + d);
 			}
 		});
 		
@@ -55,6 +71,7 @@ angular.module('shgaApp.controllers.Profile', []).controller('ProfileController'
 	$scope.save = function() {
 		$log.info('Requesting update to profile...');
 		var profile = _getProfile($scope.profile);
+		profile.hcp = parseFloat($scope.handicap.integer + "." + $scope.handicap.decimal);
 		var allEvents = $scope.shgaEvents;
 		Profile.update(rootRef, profile, allEvents);
 		__back();
@@ -74,7 +91,7 @@ angular.module('shgaApp.controllers.Profile', []).controller('ProfileController'
 			roles : userProfile.roles,
 			email : userProfile.email,
 			teebox : userProfile.teebox,
-			hcp : parseInt(userProfile.hcp),
+			hcp : parseFloat(userProfile.hcp.split(".")[0] + "." + userProfile.hcp.split(".")[1]),
 			ghin : userProfile.ghin,
 			pw : userProfile.pw
 		};

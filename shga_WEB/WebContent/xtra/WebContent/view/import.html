@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Demo {{controllerName}}</title>
+</head>
+<body>
+	<div>
+		<input type="file" id="file" name="file"/>
+		<button ng-click="add()">Add</button>
+		<button ng-click="update()">Update</button>
+	</div>
+	<table>
+		<thead>
+			<tr> 
+				<td>Name</td>			
+				<td>Handicap Index</td>			
+				<td>Effective Date</td>			
+			</tr>
+		</thead>
+		<tr ng-repeat="golfer in golfers | orderBy : 'hcp' track by $index"> 
+			<td>{{golfer.firstname}} {{golfer.lastname}}</td>			
+			<td>{{golfer.hcp}}</td>			
+			<td>{{golfer.effectiveDate}}</td>			
+		</tr>
+	</table>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Demo {{controllerName}}</title>
+</head>
+<body>
+	<div ng-show="!loaded">Loading user details...</div>
+	<div ng-show="loaded">
+	<table>
+		<tr>
+			<td>First Name:</td>
+			<td><span ng-show="isEdit">{{user.firstname}}</span><input ng-show="isCreate" type="text" ng-model="user.firstname" /></td>
+		</tr>
+		<tr>
+			<td>Last Name:</td>
+			<td><span ng-show="isEdit">{{user.lastname}}</span><input ng-show="isCreate" type="text" ng-model="user.lastname" /></td>
+		</tr>
+	</table>
+	<input ng-show="isCreate" type="button" value="Save" ng-click="save()" />
+	<table ng-show="isEdit">
+		<tr ng-repeat="golfCourse in user.golfCourses | orderBy : 'name'"> 
+			<td>{{golfCourse.name}}</td>			
+			<td>{{golfCourse.length}} yards</td>		
+		</tr>
+	</table>
+	</div>
+</body>
+</html>
