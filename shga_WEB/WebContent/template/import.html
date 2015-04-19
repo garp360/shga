@@ -4,7 +4,7 @@
 <div class="scrollable adjust">
 	<div class="scrollable-content">
 		<div>
-			<input type="file" id="file" name="file"/>
+			<input ng-model="fileUpload" type="file" id="file" name="file" onchange="angular.element(this).scope().fileNameChanged(this)" />
 		</div>
 	</div>
 	<div class="scrollable-footer scrollable-footer-adjust">
@@ -15,7 +15,7 @@
 			<tr>
 				<td style="text-align:center;">
 					<button type="submit" class="btn btn-sm btn-default" ng-click="cancel()">Cancel</button>
-					<button type="submit" class="btn btn-sm btn-primary" ng-click="import()">Import</button>
+					<button type="submit" class="btn btn-sm btn-primary" ng-disabled="!fileSelected" ng-click="import()">Import</button>
 				</td>
 			</tr>
 		</table>
